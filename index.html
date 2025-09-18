@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleFull - 简洁全能网站</title>
+    <!-- 引入外部资源 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 自定义样式 -->
+    <style>
+        .carousel-item { display: none; }
+        .carousel-item.active { display: block; animation: fade 1.5s; }
+        @keyframes fade { from { opacity: 0.4; } to { opacity: 1; } }
+        .nav-link:hover { color: #165DFF !important; }
+    </style>
+</head>
+<body class="font-sans text-gray-800">
+    <!-- 导航栏 -->
+    <nav id="navbar" class="fixed w-full bg-white/95 shadow-sm z-50 transition-all">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-blue-600">SimpleFull</a>
+            
+            <!-- 桌面导航 -->
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link text-gray-700 hover:text-blue-600">首页</a>
+                <a href="#services" class="nav-link text-gray-700 hover:text-blue-600">服务</a>
+                <a href="#products" class="nav-link text-gray-700 hover:text-blue-600">产品</a>
+                <a href="#testimonials" class="nav-link text-gray-700 hover:text-blue-600">评价</a>
+                <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600">联系我们</a>
+            </div>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="menuBtn" class="md:hidden text-gray-700 text-xl">
+                <<i class="fa fa-bars"></</i>
+            </button>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobileMenu" class="md:hidden hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#home" class="nav-link py-2 text-gray-700 hover:text-blue-600">首页</a>
+                <a href="#services" class="nav-link py-2 text-gray-700 hover:text-blue-600">服务</a>
+                <a href="#products" class="nav-link py-2 text-gray-700 hover:text-blue-600">产品</a>
+                <a href="#testimonials" class="nav-link py-2 text-gray-700 hover:text-blue-600">评价</a>
+                <a href="#contact" class="nav-link py-2 text-gray-700 hover:text-blue-600">联系我们</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首页轮播 -->
+    <section id="home" class="pt-24 pb-16">
+        <div class="container mx-auto px-4">
+            <div class="relative rounded-xl overflow-hidden h-[500px] md:h-[600px]">
+                <!-- 轮播项1 -->
+                <div class="carousel-item active relative h-full">
+                    <img src="https://picsum.photos/id/1039/1920/1080" alt="轮播图1" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/40 flex items-center">
+                        <div class="container mx-auto px-8 text-white max-w-2xl">
+                            <h1 class="text-4xl md:text-5xl font-bold mb-4">简洁设计，全能体验</h1>
+                            <p class="text-lg md:text-xl mb-8">为您提供高效、美观的网站解决方案，满足各类业务需求</p>
+                            <a href="#contact" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition-colors">
+                                立即咨询
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 轮播项2 -->
+                <div class="carousel-item relative h-full">
+                    <img src="https://picsum.photos/id/180/1920/1080" alt="轮播图2" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/40 flex items-center">
+                        <div class="container mx-auto px-8 text-white max-w-2xl">
+                            <h1 class="text-4xl md:text-5xl font-bold mb-4">响应式布局，多端适配</h1>
+                            <p class="text-lg md:text-xl mb-8">在手机、平板、电脑上均有出色表现，保障用户体验一致性</p>
+                            <a href="#services" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition-colors">
+                                查看服务
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 轮播项3 -->
+                <div class="carousel-item relative h-full">
+                    <img src="https://picsum.photos/id/48/1920/1080" alt="轮播图3" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/40 flex items-center">
+                        <div class="container mx-auto px-8 text-white max-w-2xl">
+                            <h1 class="text-4xl md:text-5xl font-bold mb-4">高效性能，极速加载</h1>
+                            <p class="text-lg md:text-xl mb-8">优化代码结构，提升加载速度，让用户无需等待</p>
+                            <a href="#products" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition-colors">
+                                浏览产品
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 轮播控制按钮 -->
+                <button id="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                    <<i class="fa fa-chevron-left"></</i>
+                </button>
+                <button id="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                    <<i class="fa fa-chevron-right"></</i>
+                </button>
+                <!-- 轮播指示器 -->
+                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-2">
+                    <button class="carousel-dot active w-3 h-3 rounded-full bg-white/80 hover:bg-white transition-colors"></button>
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-colors"></button>
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-colors"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服务展示 -->
+    <section id="services" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">我们的服务</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">提供全方位的网站解决方案，从设计到开发，从维护到优化</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 服务1 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-6">
+                        <<i class="fa fa-desktop text-2xl"></</i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">网站设计</h3>
+                    <p class="text-gray-600">根据品牌特色，打造个性化视觉设计，提升用户视觉体验和品牌辨识度</p>
+                </div>
+                <!-- 服务2 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-6">
+                        <<i class="fa fa-code text-2xl"></</i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">前端开发</h3>
+                    <p class="text-gray-600">采用前沿技术栈，开发响应式、高性能的前端界面，保障多端一致体验</p>
+                </div>
+                <!-- 服务3 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-6">
+                        <<i class="fa fa-server text-2xl"></</i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">后端开发</h3>
+                    <p class="text-gray-600">构建稳定、安全的后端系统，提供数据存储、接口开发等核心功能支持</p>
+                </div>
+                <!-- 服务4 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-6">
+                        <<i class="fa fa-search text-2xl"></</i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">SEO优化</h3>
+                    <p class="text-gray-600">通过技术优化和内容策略，提升网站在搜索引擎中的排名，增加曝光量</p>
+                </div>
+                <!-- 服务5 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-6">
+                        <<i class="fa fa-shield text-2xl"></</i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">安全维护</h3>
+                    <p class="text-gray-600">定期安全检测和系统维护，保障网站稳定运行，防止数据泄露和攻击</p>
+                </div>
+                <!-- 服务6 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-6">
+                        <<i class="fa fa-mobile text-2xl"></</i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">移动端适配</h3>
+                    <p class="text-gray-600">针对移动设备特性优化界面和交互，提供流畅的移动端浏览体验</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 产品列表 -->
+    <section id="products" class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">热门产品</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">精选高性价比产品，满足不同场景下的使用需求</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- 产品1 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://picsum.photos/id/0/600/400" alt="产品1" class="w-full h-full object-cover hover:scale-105 transition-transform">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">基础网站套餐</h3>
+                        <div class="flex items-center text-yellow-500 mb-3">
+                            <<i class="fa fa-star"></</i>
+                            <<i class="fa fa-star"></</i>
+                            <<i class="fa fa-star"></</i>
+                            <<i class="fa fa-star"></</i>
+                            <<i class="fa fa-star-half-o"></</i>
+                            <span class="text-gray-500 text-sm ml-2">(4.5)</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">适合个人和小型企业的基础网站，包含5页内容和基础功能</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-600 font-bold text-xl">¥2999</span>
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors text-sm">
+                                了解详情
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 产品2 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://picsum.photos/id/160/600/400" alt="产品2" class="w-full h-full object-cover hover:scale-105 transition-transform">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">企业展示套餐</h3>
+                        <div class="flex items-center text-yellow-500 mb-3">
+                            <<i class="fa fa-star"></</i>
+                            <<i class="fa fa-star"></</i>
+                            <<i class="fa fa-star"></</i>
+                            <<i class="fa fa-star"></</i>
+                            <<i class="fa fa-star"></</i>
+                            <span class="text-gray-500 text-sm ml-2">(5.0)</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">适合中小企业的展示型网站，包含10页内容和高级设计</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-600 font-bold text-xl">¥5999</span>
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors text-sm">
+                                了解详情
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 产品3 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://picsum.photos/id/26/600/400" alt="产品3" class="w-full h-full object-cover hover:scale-105 transition-transform">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">电商网站套餐</h3>
+                        <div class="flex items-center text-yellow-500 mb-3">
+                            <<i class="fa fa-star"></</i>
+                            <<i class="fa fa-star"></</i>
+                            <<i class="fa fa-star"></</i>
+                            <<i class="fa fa-star"></</i>
+                            <<i class="fa fa-star-o"></</i>
+                            <span class="text-gray-500 text-sm ml
