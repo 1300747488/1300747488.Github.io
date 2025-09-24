@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>个人简历 | 张小明</title>
+    <title>个人简历 | 蔡颐城 - 瓦罗兰特玩家</title>
     <!-- 引入Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 引入Font Awesome -->
@@ -17,9 +17,9 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#3B82F6',
-                        secondary: '#10B981',
-                        dark: '#1E293B',
+                        primary: '#FF4655', // 瓦罗兰特主题红
+                        secondary: '#00FFFF', // 瓦罗兰特蓝色
+                        dark: '#111827',
                         light: '#F8FAFC'
                     },
                     fontFamily: {
@@ -68,14 +68,14 @@
     <!-- 导航栏 -->
     <header id="navbar" class="fixed w-full bg-white/90 backdrop-blur-sm shadow-sm z-50 transition-all duration-300">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="#" class="text-xl font-bold text-primary">张小明</a>
+            <a href="#" class="text-xl font-bold text-primary">蔡颐城</a>
             
             <!-- 桌面导航 -->
             <nav class="hidden md:flex space-x-8">
                 <a href="#about" class="text-gray-600 hover:text-primary transition-custom">关于我</a>
-                <a href="#skills" class="text-gray-600 hover:text-primary transition-custom">技能</a>
-                <a href="#experience" class="text-gray-600 hover:text-primary transition-custom">工作经验</a>
-                <a href="#education" class="text-gray-600 hover:text-primary transition-custom">教育背景</a>
+                <a href="#agents" class="text-gray-600 hover:text-primary transition-custom">特工精通</a>
+                <a href="#experience" class="text-gray-600 hover:text-primary transition-custom">游戏经历</a>
+                <a href="#achievements" class="text-gray-600 hover:text-primary transition-custom">比赛成绩</a>
                 <a href="#contact" class="text-gray-600 hover:text-primary transition-custom">联系方式</a>
             </nav>
             
@@ -89,9 +89,9 @@
         <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
             <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
                 <a href="#about" class="text-gray-600 hover:text-primary py-2 transition-custom">关于我</a>
-                <a href="#skills" class="text-gray-600 hover:text-primary py-2 transition-custom">技能</a>
-                <a href="#experience" class="text-gray-600 hover:text-primary py-2 transition-custom">工作经验</a>
-                <a href="#education" class="text-gray-600 hover:text-primary py-2 transition-custom">教育背景</a>
+                <a href="#agents" class="text-gray-600 hover:text-primary py-2 transition-custom">特工精通</a>
+                <a href="#experience" class="text-gray-600 hover:text-primary py-2 transition-custom">游戏经历</a>
+                <a href="#achievements" class="text-gray-600 hover:text-primary py-2 transition-custom">比赛成绩</a>
                 <a href="#contact" class="text-gray-600 hover:text-primary py-2 transition-custom">联系方式</a>
             </div>
         </div>
@@ -100,32 +100,32 @@
     <!-- 主要内容 -->
     <main>
         <!-- 英雄区域 -->
-        <section id="about" class="pt-32 pb-20 bg-gradient-to-br from-blue-50 to-indigo-50">
+        <section id="about" class="pt-32 pb-20 bg-gradient-to-br from-red-50 to-purple-50">
             <div class="container mx-auto px-4">
                 <div class="flex flex-col md:flex-row items-center">
                     <div class="md:w-1/3 mb-10 md:mb-0">
                         <div class="relative">
                             <div class="absolute -inset-4 bg-primary/20 rounded-full blur-xl opacity-70"></div>
-                            <img src="https://picsum.photos/seed/profile/400/400" alt="张小明的照片" class="relative w-64 h-64 object-cover rounded-full mx-auto border-4 border-white shadow-lg">
+                            <img src="https://picsum.photos/seed/valorant1/400/400" alt="蔡颐城的游戏照片" class="relative w-64 h-64 object-cover rounded-full mx-auto border-4 border-white shadow-lg">
                         </div>
                     </div>
                     
                     <div class="md:w-2/3 md:pl-12 animate-fade-in">
                         <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-dark leading-tight mb-4">
-                            张小明
+                            蔡颐城
                         </h1>
                         <h2 class="text-[clamp(1.2rem,3vw,1.8rem)] text-primary mb-6">
-                            前端开发工程师
+                            瓦罗兰特资深玩家
                         </h2>
                         <p class="text-gray-600 text-lg mb-8 max-w-2xl">
-                            拥有5年前端开发经验，专注于创建响应式、高性能的Web应用。擅长使用现代JavaScript框架构建用户友好的界面，热衷于学习新技术并将其应用到实际项目中。
+                            拥有3年瓦罗兰特游戏经验，最高段位钻石1，擅长多个特工角色，精通各种战术配合。参与过多次线下比赛，团队协作能力强，战术理解深刻。
                         </p>
                         <div class="flex flex-wrap gap-4">
                             <a href="#contact" class="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-custom flex items-center">
-                                <i class="fa fa-envelope mr-2"></i> 联系我
+                                <i class="fa fa-user-plus mr-2"></i> 一起组队
                             </a>
                             <a href="#" class="bg-white hover:bg-gray-100 text-primary border border-primary font-medium px-6 py-3 rounded-lg shadow-sm hover:shadow-md transition-custom flex items-center">
-                                <i class="fa fa-download mr-2"></i> 下载简历
+                                <i class="fa fa-trophy mr-2"></i> 比赛记录
                             </a>
                         </div>
                     </div>
@@ -133,92 +133,70 @@
             </div>
         </section>
 
-        <!-- 技能部分 -->
-        <section id="skills" class="py-20 bg-white">
+        <!-- 特工精通部分 -->
+        <section id="agents" class="py-20 bg-white">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-16">
-                    <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-4">专业技能</h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">我掌握了多种前端技术和工具，能够独立完成从设计到部署的全流程开发工作</p>
+                    <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-4">精通特工</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">我掌握了多种瓦罗兰特的特工及其技能组合，能够根据团队需求灵活选择</p>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- 技能卡片 1 -->
+                    <!-- 特工卡片 1 -->
                     <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom border border-gray-100">
-                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fa fa-html5 text-2xl text-orange-500"></i>
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fa fa-bolt text-2xl text-primary"></i>
                         </div>
-                        <h3 class="text-xl font-semibold mb-3">HTML & CSS</h3>
-                        <p class="text-gray-600 mb-4">精通HTML5语义化标签和CSS3特性，能够构建语义化、可访问性高的网页结构。</p>
+                        <h3 class="text-xl font-semibold mb-3">捷力</h3>
+                        <p class="text-gray-600 mb-4">擅长利用机动性突破敌方防线，烟雾弹封锁视野配合闪光弹快速清场</p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">HTML5</span>
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">CSS3</span>
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Tailwind CSS</span>
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Sass</span>
+                            <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">机动性</span>
+                            <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">突破</span>
+                            <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">烟雾弹</span>
+                            <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">闪光</span>
                         </div>
                     </div>
                     
-                    <!-- 技能卡片 2 -->
+                    <!-- 特工卡片 2 -->
                     <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom border border-gray-100">
                         <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fa fa-code text-2xl text-yellow-500"></i>
+                            <i class="fa fa-shield text-2xl text-secondary"></i>
                         </div>
-                        <h3 class="text-xl font-semibold mb-3">JavaScript</h3>
-                        <p class="text-gray-600 mb-4">深入理解JavaScript核心概念，熟练运用ES6+特性，能够编写高效、可维护的代码。</p>
+                        <h3 class="text-xl font-semibold mb-3">布史东</h3>
+                        <p class="text-gray-600 mb-4">团队核心防守专家，能够有效控制区域并为队友提供保护和信息</p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">ES6+</span>
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">React</span>
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Vue</span>
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">TypeScript</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">防守</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">控制</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">烟雾</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">团队支援</span>
                         </div>
                     </div>
                     
-                    <!-- 技能卡片 3 -->
+                    <!-- 特工卡片 3 -->
                     <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom border border-gray-100">
-                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fa fa-cogs text-2xl text-primary"></i>
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fa fa-eye text-2xl text-purple-600"></i>
                         </div>
-                        <h3 class="text-xl font-semibold mb-3">开发工具</h3>
-                        <p class="text-gray-600 mb-4">熟练使用各种开发工具和版本控制系统，能够提高开发效率和代码质量。</p>
+                        <h3 class="text-xl font-semibold mb-3">猎枭</h3>
+                        <p class="text-gray-600 mb-4">精准的信息收集者，无人机和绊线能够为团队提供关键敌方位置信息</p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Git</span>
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Webpack</span>
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">VS Code</span>
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Figma</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">信息</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">侦查</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">控制</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">辅助</span>
                         </div>
                     </div>
                 </div>
                 
                 <!-- 技能熟练度 -->
                 <div class="mt-16">
-                    <h3 class="text-xl font-semibold mb-8 text-center">技能熟练度</h3>
+                    <h3 class="text-xl font-semibold mb-8 text-center">特工熟练度</h3>
                     
                     <div class="space-y-6 max-w-3xl mx-auto">
-                        <!-- 技能条 1 -->
+                        <!-- 特工熟练度 1 -->
                         <div>
                             <div class="flex justify-between mb-2">
-                                <span class="font-medium">React</span>
-                                <span>90%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-primary h-2.5 rounded-full" style="width: 90%"></div>
-                            </div>
-                        </div>
-                        
-                        <!-- 技能条 2 -->
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium">JavaScript</span>
-                                <span>85%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-primary h-2.5 rounded-full" style="width: 85%"></div>
-                            </div>
-                        </div>
-                        
-                        <!-- 技能条 3 -->
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium">HTML & CSS</span>
+                                <span class="font-medium">捷力</span>
                                 <span>95%</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-2.5">
@@ -226,10 +204,32 @@
                             </div>
                         </div>
                         
-                        <!-- 技能条 4 -->
+                        <!-- 特工熟练度 2 -->
                         <div>
                             <div class="flex justify-between mb-2">
-                                <span class="font-medium">Vue</span>
+                                <span class="font-medium">布史东</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-primary h-2.5 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- 特工熟练度 3 -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">猎枭</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-primary h-2.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- 特工熟练度 4 -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">夜戮</span>
                                 <span>80%</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-2.5">
@@ -241,30 +241,30 @@
             </div>
         </section>
 
-        <!-- 工作经验 -->
+        <!-- 游戏经历 -->
         <section id="experience" class="py-20 bg-gray-50">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-16">
-                    <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-4">工作经验</h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">我在多家科技公司担任前端开发角色，参与并主导了多个重要项目</p>
+                    <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-4">游戏经历</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">从瓦罗兰特上线以来，我积累了丰富的游戏经验和团队协作经历</p>
                 </div>
                 
                 <div class="relative max-w-4xl mx-auto">
                     <!-- 时间线中轴线 -->
                     <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 transform md:translate-x-px"></div>
                     
-                    <!-- 经验项 1 -->
+                    <!-- 经历项 1 -->
                     <div class="relative mb-12">
                         <div class="flex flex-col md:flex-row items-start">
                             <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 mt-6 md:mt-0">
-                                <h3 class="text-xl font-semibold text-dark">高级前端开发工程师</h3>
-                                <p class="text-primary font-medium">科技有限公司</p>
-                                <p class="text-gray-500 mt-1">2020年3月 - 至今</p>
-                                <p class="text-gray-600 mt-3">负责公司核心产品的前端架构设计和开发，优化前端性能，提升用户体验。主导多个重要项目的前端实现，带领5人开发团队完成项目交付。</p>
+                                <h3 class="text-xl font-semibold text-dark">战队队长</h3>
+                                <p class="text-primary font-medium">烈火战队</p>
+                                <p class="text-gray-500 mt-1">2022年3月 - 至今</p>
+                                <p class="text-gray-600 mt-3">担任战队队长，负责战术制定和队员训练计划。带领团队参加多次线上比赛，取得优异成绩。擅长根据对手特点调整战术，提高团队胜率。</p>
                                 <div class="flex flex-wrap justify-end gap-2 mt-4">
-                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">React</span>
-                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">TypeScript</span>
-                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Redux</span>
+                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">指挥</span>
+                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">战术制定</span>
+                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">团队管理</span>
                                 </div>
                             </div>
                             
@@ -272,47 +272,47 @@
                             <div class="absolute left-0 md:left-1/2 w-6 h-6 rounded-full bg-primary shadow transform -translate-x-1/2 md:translate-x-px z-10"></div>
                             
                             <div class="md:w-1/2 md:pl-12 order-1 md:order-2">
-                                <img src="https://picsum.photos/seed/company1/300/200" alt="公司项目截图" class="rounded-lg shadow-sm w-full max-w-xs">
+                                <img src="https://picsum.photos/seed/valorant-team1/300/200" alt="战队照片" class="rounded-lg shadow-sm w-full max-w-xs">
                             </div>
                         </div>
                     </div>
                     
-                    <!-- 经验项 2 -->
+                    <!-- 经历项 2 -->
                     <div class="relative mb-12">
                         <div class="flex flex-col md:flex-row items-start">
                             <div class="md:w-1/2 md:pr-12 order-2 md:order-1 mt-6 md:mt-0">
-                                <img src="https://picsum.photos/seed/company2/300/200" alt="公司项目截图" class="rounded-lg shadow-sm w-full max-w-xs ml-auto">
+                                <img src="https://picsum.photos/seed/valorant-comp2/300/200" alt="比赛照片" class="rounded-lg shadow-sm w-full max-w-xs ml-auto">
                             </div>
                             
                             <!-- 时间点标记 -->
                             <div class="absolute left-0 md:left-1/2 w-6 h-6 rounded-full bg-primary shadow transform -translate-x-1/2 md:translate-x-px z-10"></div>
                             
                             <div class="md:w-1/2 md:pl-12 order-1 md:order-2">
-                                <h3 class="text-xl font-semibold text-dark">前端开发工程师</h3>
-                                <p class="text-primary font-medium">互联网科技公司</p>
-                                <p class="text-gray-500 mt-1">2018年5月 - 2020年2月</p>
-                                <p class="text-gray-600 mt-3">参与电商平台的前端开发工作，实现响应式布局，优化移动端体验。与后端团队协作，设计并实现API交互，解决跨浏览器兼容性问题。</p>
+                                <h3 class="text-xl font-semibold text-dark">主力选手</h3>
+                                <p class="text-primary font-medium">极光战队</p>
+                                <p class="text-gray-500 mt-1">2021年5月 - 2022年2月</p>
+                                <p class="text-gray-600 mt-3">作为团队主力突破手，擅长使用捷力和芮娜进行正面突破。参与多场地区性比赛，帮助团队获得两次亚军和一次季军。</p>
                                 <div class="flex flex-wrap gap-2 mt-4">
-                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Vue</span>
-                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Sass</span>
-                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Webpack</span>
+                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">突破手</span>
+                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">主攻</span>
+                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">残局处理</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- 经验项 3 -->
+                    <!-- 经历项 3 -->
                     <div class="relative">
                         <div class="flex flex-col md:flex-row items-start">
                             <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 mt-6 md:mt-0">
-                                <h3 class="text-xl font-semibold text-dark">前端开发实习生</h3>
-                                <p class="text-primary font-medium">数字技术有限公司</p>
-                                <p class="text-gray-500 mt-1">2017年7月 - 2018年4月</p>
-                                <p class="text-gray-600 mt-3">协助开发公司官网和内部管理系统，学习前端开发流程和最佳实践。参与页面重构和性能优化，提升网站加载速度和用户体验。</p>
+                                <h3 class="text-xl font-semibold text-dark">休闲玩家到进阶</h3>
+                                <p class="text-primary font-medium">个人排位</p>
+                                <p class="text-gray-500 mt-1">2020年7月 - 2021年4月</p>
+                                <p class="text-gray-600 mt-3">从瓦罗兰特上线初期开始接触游戏，快速提升技术水平，从青铜段位一路打到钻石。研究各种特工技巧和地图战术，积累了丰富的个人作战经验。</p>
                                 <div class="flex flex-wrap justify-end gap-2 mt-4">
-                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">HTML5</span>
-                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">CSS3</span>
-                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">jQuery</span>
+                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm"> solo queue</span>
+                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">多特工精通</span>
+                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">战术研究</span>
                                 </div>
                             </div>
                             
@@ -320,7 +320,7 @@
                             <div class="absolute left-0 md:left-1/2 w-6 h-6 rounded-full bg-primary shadow transform -translate-x-1/2 md:translate-x-px z-10"></div>
                             
                             <div class="md:w-1/2 md:pl-12 order-1 md:order-2">
-                                <img src="https://picsum.photos/seed/company3/300/200" alt="公司项目截图" class="rounded-lg shadow-sm w-full max-w-xs">
+                                <img src="https://picsum.photos/seed/valorant-rank/300/200" alt="段位截图" class="rounded-lg shadow-sm w-full max-w-xs">
                             </div>
                         </div>
                     </div>
@@ -328,52 +328,80 @@
             </div>
         </section>
 
-        <!-- 教育背景 -->
-        <section id="education" class="py-20 bg-white">
+        <!-- 比赛成绩 -->
+        <section id="achievements" class="py-20 bg-white">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-16">
-                    <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-4">教育背景</h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">我接受了系统的计算机科学教育，为我的职业生涯奠定了坚实的基础</p>
+                    <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-4">比赛成绩</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">参与各类瓦罗兰特比赛，积累了丰富的赛事经验并取得了一定成绩</p>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                    <!-- 教育项 1 -->
+                    <!-- 成绩项 1 -->
                     <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom border border-gray-100">
                         <div class="flex justify-between items-start mb-4">
                             <div>
-                                <h3 class="text-xl font-semibold text-dark">计算机科学与技术</h3>
-                                <p class="text-primary font-medium">硕士学位</p>
+                                <h3 class="text-xl font-semibold text-dark">城市挑战赛</h3>
+                                <p class="text-primary font-medium">冠军</p>
                             </div>
-                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">2015-2017</span>
+                            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">2023年5月</span>
                         </div>
-                        <h4 class="font-medium mb-3">北京大学</h4>
-                        <p class="text-gray-600 mb-4">主修课程：数据结构、算法分析、人工智能、计算机网络、数据库系统等。研究方向为Web前端技术与用户体验优化。</p>
-                        <p class="text-gray-600"><span class="font-medium">毕业论文：</span>《基于React的大型Web应用性能优化研究》</p>
+                        <h4 class="font-medium mb-3">烈火战队 | 队长/指挥</h4>
+                        <p class="text-gray-600 mb-4">带领团队在32支队伍中脱颖而出，决赛中以2:1战胜对手获得冠军。个人获得总决赛MVP，场均击杀21.3，KD比1.8。</p>
+                        <p class="text-gray-600"><span class="font-medium">使用特工：</span>捷力、猎枭</p>
                     </div>
                     
-                    <!-- 教育项 2 -->
+                    <!-- 成绩项 2 -->
                     <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom border border-gray-100">
                         <div class="flex justify-between items-start mb-4">
                             <div>
-                                <h3 class="text-xl font-semibold text-dark">软件工程</h3>
-                                <p class="text-primary font-medium">学士学位</p>
+                                <h3 class="text-xl font-semibold text-dark">高校联赛</h3>
+                                <p class="text-primary font-medium">亚军</p>
                             </div>
-                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">2011-2015</span>
+                            <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">2022年11月</span>
                         </div>
-                        <h4 class="font-medium mb-3">南京大学</h4>
-                        <p class="text-gray-600 mb-4">主修课程：编程语言、软件工程、操作系统、计算机组成原理、Web开发基础等。参与多个校内Web开发项目，积累了实践经验。</p>
-                        <p class="text-gray-600"><span class="font-medium">荣誉：</span>校级优秀毕业生、三次一等奖学金</p>
+                        <h4 class="font-medium mb-3">烈火战队 | 队长/突破</h4>
+                        <p class="text-gray-600 mb-4">在高校联赛中带领团队获得亚军，赛事中共击杀326人，助攻128次。半决赛中完成关键1v3残局，帮助团队晋级决赛。</p>
+                        <p class="text-gray-600"><span class="font-medium">使用特工：</span>捷力、夜戮</p>
+                    </div>
+                    
+                    <!-- 成绩项 3 -->
+                    <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom border border-gray-100">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-semibold text-dark">线上公开赛</h3>
+                                <p class="text-primary font-medium">季军</p>
+                            </div>
+                            <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm">2022年3月</span>
+                        </div>
+                        <h4 class="font-medium mb-3">极光战队 | 主力队员</h4>
+                        <p class="text-gray-600 mb-4">作为团队主力突破手，在比赛中表现出色，多次帮助团队打开局面。赛事KD比1.6，获得"最佳突破手"提名。</p>
+                        <p class="text-gray-600"><span class="font-medium">使用特工：</span>芮娜、捷力</p>
+                    </div>
+                    
+                    <!-- 成绩项 4 -->
+                    <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom border border-gray-100">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-semibold text-dark">社区杯赛</h3>
+                                <p class="text-primary font-medium">冠军</p>
+                            </div>
+                            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">2021年8月</span>
+                        </div>
+                        <h4 class="font-medium mb-3">极光战队 | 队员</h4>
+                        <p class="text-gray-600 mb-4">在16支社区队伍中夺冠，决赛中以13:11险胜对手。个人在决赛中使用布史东的烟雾弹战术成为制胜关键。</p>
+                        <p class="text-gray-600"><span class="font-medium">使用特工：</span>布史东、猎枭</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- 联系方式 -->
-        <section id="contact" class="py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
+        <section id="contact" class="py-20 bg-gradient-to-br from-red-50 to-purple-50">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-16">
                     <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-4">联系方式</h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">如果您对我的技能和经验感兴趣，或者有合适的工作机会，欢迎随时联系我</p>
+                    <p class="text-gray-600 max-w-2xl mx-auto">如果想一起组队打瓦罗兰特，或者有比赛机会，欢迎随时联系我</p>
                 </div>
                 
                 <div class="max-w-4xl mx-auto">
@@ -381,54 +409,54 @@
                         <!-- 联系信息 -->
                         <div>
                             <div class="bg-white rounded-xl p-8 shadow-sm h-full">
-                                <h3 class="text-xl font-semibold mb-6">联系信息</h3>
+                                <h3 class="text-xl font-semibold mb-6">游戏账号</h3>
                                 
                                 <div class="space-y-6">
                                     <div class="flex items-start">
-                                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                            <i class="fa fa-envelope text-primary"></i>
+                                        <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                            <i class="fa fa-gamepad text-primary"></i>
                                         </div>
                                         <div>
-                                            <h4 class="font-medium mb-1">邮箱</h4>
-                                            <p class="text-gray-600">zhangxiaoming@example.com</p>
+                                            <h4 class="font-medium mb-1">瓦罗兰特ID</h4>
+                                            <p class="text-gray-600">蔡颐城#CN1</p>
                                         </div>
                                     </div>
                                     
                                     <div class="flex items-start">
-                                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                            <i class="fa fa-phone text-primary"></i>
+                                        <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                            <i class="fa fa-qq text-primary"></i>
                                         </div>
                                         <div>
-                                            <h4 class="font-medium mb-1">电话</h4>
-                                            <p class="text-gray-600">138-1234-5678</p>
+                                            <h4 class="font-medium mb-1">QQ</h4>
+                                            <p class="text-gray-600">123456789</p>
                                         </div>
                                     </div>
                                     
                                     <div class="flex items-start">
-                                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                            <i class="fa fa-map-marker text-primary"></i>
+                                        <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                            <i class="fa fa-weixin text-primary"></i>
                                         </div>
                                         <div>
-                                            <h4 class="font-medium mb-1">地址</h4>
-                                            <p class="text-gray-600">北京市海淀区中关村大街1号</p>
+                                            <h4 class="font-medium mb-1">微信</h4>
+                                            <p class="text-gray-600">CaiYiCheng_VAL</p>
                                         </div>
                                     </div>
                                 </div>
                                 
                                 <div class="mt-8">
-                                    <h4 class="font-medium mb-4">社交媒体</h4>
+                                    <h4 class="font-medium mb-4">社交平台</h4>
                                     <div class="flex space-x-4">
-                                        <a href="#" class="w-10 h-10 bg-blue-100 hover:bg-blue-200 text-primary rounded-full flex items-center justify-center transition-custom">
-                                            <i class="fa fa-github"></i>
+                                        <a href="#" class="w-10 h-10 bg-red-100 hover:bg-red-200 text-primary rounded-full flex items-center justify-center transition-custom">
+                                            <i class="fa fa-bilibili"></i>
                                         </a>
-                                        <a href="#" class="w-10 h-10 bg-blue-100 hover:bg-blue-200 text-primary rounded-full flex items-center justify-center transition-custom">
-                                            <i class="fa fa-linkedin"></i>
+                                        <a href="#" class="w-10 h-10 bg-red-100 hover:bg-red-200 text-primary rounded-full flex items-center justify-center transition-custom">
+                                            <i class="fa fa-youtube-play"></i>
                                         </a>
-                                        <a href="#" class="w-10 h-10 bg-blue-100 hover:bg-blue-200 text-primary rounded-full flex items-center justify-center transition-custom">
-                                            <i class="fa fa-twitter"></i>
+                                        <a href="#" class="w-10 h-10 bg-red-100 hover:bg-red-200 text-primary rounded-full flex items-center justify-center transition-custom">
+                                            <i class="fa fa-twitch"></i>
                                         </a>
-                                        <a href="#" class="w-10 h-10 bg-blue-100 hover:bg-blue-200 text-primary rounded-full flex items-center justify-center transition-custom">
-                                            <i class="fa fa-codepen"></i>
+                                        <a href="#" class="w-10 h-10 bg-red-100 hover:bg-red-200 text-primary rounded-full flex items-center justify-center transition-custom">
+                                            <i class="fa fa-weibo"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -442,18 +470,18 @@
                                 
                                 <form>
                                     <div class="mb-4">
-                                        <label for="name" class="block text-gray-700 font-medium mb-2">姓名</label>
-                                        <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-custom" placeholder="您的姓名">
+                                        <label for="name" class="block text-gray-700 font-medium mb-2">你的游戏ID</label>
+                                        <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-custom" placeholder="你的瓦罗兰特ID">
                                     </div>
                                     
                                     <div class="mb-4">
-                                        <label for="email" class="block text-gray-700 font-medium mb-2">邮箱</label>
-                                        <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-custom" placeholder="您的邮箱">
+                                        <label for="email" class="block text-gray-700 font-medium mb-2">联系方式</label>
+                                        <input type="text" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-custom" placeholder="QQ或微信">
                                     </div>
                                     
                                     <div class="mb-6">
-                                        <label for="message" class="block text-gray-700 font-medium mb-2">消息</label>
-                                        <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-custom" placeholder="请输入您的消息..."></textarea>
+                                        <label for="message" class="block text-gray-700 font-medium mb-2">消息内容</label>
+                                        <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-custom" placeholder="想一起组队或有其他事情..."></textarea>
                                     </div>
                                     
                                     <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-lg shadow-sm hover:shadow-md transition-custom flex items-center justify-center">
@@ -473,14 +501,14 @@
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
-                    <p class="text-gray-400">© 2023 张小明. 保留所有权利.</p>
+                    <p class="text-gray-400">© 2023 蔡颐城的瓦罗兰特主页. 保留所有权利.</p>
                 </div>
                 
                 <div class="flex space-x-6">
                     <a href="#about" class="text-gray-400 hover:text-white transition-custom">关于我</a>
-                    <a href="#skills" class="text-gray-400 hover:text-white transition-custom">技能</a>
-                    <a href="#experience" class="text-gray-400 hover:text-white transition-custom">工作经验</a>
-                    <a href="#education" class="text-gray-400 hover:text-white transition-custom">教育背景</a>
+                    <a href="#agents" class="text-gray-400 hover:text-white transition-custom">特工精通</a>
+                    <a href="#experience" class="text-gray-400 hover:text-white transition-custom">游戏经历</a>
+                    <a href="#achievements" class="text-gray-400 hover:text-white transition-custom">比赛成绩</a>
                     <a href="#contact" class="text-gray-400 hover:text-white transition-custom">联系方式</a>
                 </div>
             </div>
