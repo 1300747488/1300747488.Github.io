@@ -2,607 +2,716 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>个人简历 | 蔡颐城 - 瓦罗兰特玩家</title>
-    <!-- 引入Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入Font Awesome -->
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- 引入Google字体 -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind配置 -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#FF4655', // 瓦罗兰特主题红
-                        secondary: '#00FFFF', // 瓦罗兰特蓝色
-                        dark: '#111827',
-                        light: '#F8FAFC'
-                    },
-                    fontFamily: {
-                        inter: ['Inter', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            .transition-custom {
-                transition: all 0.3s ease;
-            }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>蔡颐城跑酷 - 不要撞上消防栓</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
         
-        /* 全局样式 */
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            touch-action: manipulation;
         }
         
-        /* 滚动行为 */
-        html {
-            scroll-behavior: smooth;
+        #game-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 100vh;
+            max-height: 600px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
         
-        /* 自定义动画 */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        canvas {
+            background: linear-gradient(to bottom, #87CEEB, #E0F7FA);
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
         }
         
-        .animate-fade-in {
-            animation: fadeIn 0.6s ease forwards;
+        #ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            text-align: center;
+            border-radius: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+            padding: 20px;
+            z-index: 100;
+        }
+        
+        .screen.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0 #000, 1px 1px 5px rgba(0,0,0,0.8);
+            color: #FF5722;
+            background: linear-gradient(to right, #FF5722, #FF9800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #FF9800;
+            text-shadow: 2px 2px 0 #000, 1px 1px 3px rgba(0,0,0,0.8);
+            font-weight: bold;
+        }
+        
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            max-width: 90%;
+            text-shadow: 1px 1px 0 #000, 1px 1px 3px rgba(0,0,0,0.8);
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        
+        .button {
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            background: linear-gradient(to bottom, #FF5722, #E64A19);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 30px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            pointer-events: auto;
+            text-shadow: 1px 1px 0 #000;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .button:hover {
+            background: linear-gradient(to bottom, #FF9800, #F57C00);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .button:active {
+            transform: translateY(0);
+        }
+        
+        #score-display {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 24px;
+            border-radius: 50px;
+            pointer-events: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.8);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 20px;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .control-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(to bottom, rgba(255, 87, 34, 0.9), rgba(230, 74, 25, 0.9));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            pointer-events: auto;
+            user-select: none;
+            text-shadow: 1px 1px 0 #000;
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            transition: transform 0.1s;
+        }
+        
+        .control-btn:active {
+            background: linear-gradient(to bottom, rgba(255, 152, 0, 0.9), rgba(245, 124, 0, 0.9));
+            transform: scale(0.95);
+        }
+        
+        #instructions {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #BBDEFB;
+            text-shadow: 1px 1px 0 #000;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            p {
+                font-size: 1.2rem;
+            }
+            
+            .button {
+                font-size: 1.2rem;
+                padding: 12px 30px;
+            }
+            
+            #score-display {
+                font-size: 1.5rem;
+                top: 15px;
+                left: 15px;
+                padding: 10px 20px;
+            }
+            
+            .control-btn {
+                width: 70px;
+                height: 70px;
+                font-size: 35px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+            
+            .button {
+                font-size: 1rem;
+                padding: 10px 25px;
+            }
+            
+            #score-display {
+                font-size: 1.2rem;
+                top: 10px;
+                left: 10px;
+                padding: 8px 16px;
+            }
+            
+            .control-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+            }
+            
+            .controls {
+                bottom: 20px;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-inter">
-    <!-- 导航栏 -->
-    <header id="navbar" class="fixed w-full bg-white/90 backdrop-blur-sm shadow-sm z-50 transition-all duration-300">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="#" class="text-xl font-bold text-primary">蔡颐城</a>
-            
-            <!-- 桌面导航 -->
-            <nav class="hidden md:flex space-x-8">
-                <a href="#about" class="text-gray-600 hover:text-primary transition-custom">关于我</a>
-                <a href="#agents" class="text-gray-600 hover:text-primary transition-custom">特工精通</a>
-                <a href="#experience" class="text-gray-600 hover:text-primary transition-custom">游戏经历</a>
-                <a href="#achievements" class="text-gray-600 hover:text-primary transition-custom">比赛成绩</a>
-                <a href="#contact" class="text-gray-600 hover:text-primary transition-custom">联系方式</a>
-            </nav>
-            
-            <!-- 移动端菜单按钮 -->
-            <button id="menu-toggle" class="md:hidden text-gray-600 focus:outline-none">
-                <i class="fa fa-bars text-xl"></i>
-            </button>
-        </div>
+<body>
+    <div id="game-container">
+        <canvas id="game-canvas"></canvas>
         
-        <!-- 移动端导航菜单 -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
-            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
-                <a href="#about" class="text-gray-600 hover:text-primary py-2 transition-custom">关于我</a>
-                <a href="#agents" class="text-gray-600 hover:text-primary py-2 transition-custom">特工精通</a>
-                <a href="#experience" class="text-gray-600 hover:text-primary py-2 transition-custom">游戏经历</a>
-                <a href="#achievements" class="text-gray-600 hover:text-primary py-2 transition-custom">比赛成绩</a>
-                <a href="#contact" class="text-gray-600 hover:text-primary py-2 transition-custom">联系方式</a>
+        <div id="ui-layer">
+            <div id="score-display">得分: 0</div>
+            
+            <div id="start-screen" class="screen active">
+                <h1>蔡颐城跑酷</h1>
+                <p>控制蔡颐城躲避消防栓！不要撞上！</p>
+                <p>蔡是蔡依林的蔡，颐是颐和园的颐，城是城市的城</p>
+                <button class="button" id="start-button">开始游戏</button>
+                <div id="instructions">
+                    ← 向左移动 | 向右移动 →
+                </div>
+            </div>
+            
+            <div id="game-over-screen" class="screen">
+                <h2>哎呀！蔡颐城撞上消防栓了！</h2>
+                <p>蔡颐城被紧急送往医院治疗...</p>
+                <p>最终得分: <span id="final-score">0</span></p>
+                <button class="button" id="restart-button">重新开始</button>
+            </div>
+            
+            <div class="controls">
+                <div class="control-btn" id="left-btn">←</div>
+                <div class="control-btn" id="right-btn">→</div>
             </div>
         </div>
-    </header>
+    </div>
 
-    <!-- 主要内容 -->
-    <main>
-        <!-- 英雄区域 -->
-        <section id="about" class="pt-32 pb-20 bg-gradient-to-br from-red-50 to-purple-50">
-            <div class="container mx-auto px-4">
-                <div class="flex flex-col md:flex-row items-center">
-                    <div class="md:w-1/3 mb-10 md:mb-0">
-                        <div class="relative">
-                            <div class="absolute -inset-4 bg-primary/20 rounded-full blur-xl opacity-70"></div>
-                            <img src="https://picsum.photos/seed/valorant1/400/400" alt="蔡颐城的游戏照片" class="relative w-64 h-64 object-cover rounded-full mx-auto border-4 border-white shadow-lg">
-                        </div>
-                    </div>
-                    
-                    <div class="md:w-2/3 md:pl-12 animate-fade-in">
-                        <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-dark leading-tight mb-4">
-                            蔡颐城
-                        </h1>
-                        <h2 class="text-[clamp(1.2rem,3vw,1.8rem)] text-primary mb-6">
-                            瓦罗兰特资深玩家
-                        </h2>
-                        <p class="text-gray-600 text-lg mb-8 max-w-2xl">
-                            拥有3年瓦罗兰特游戏经验，最高段位钻石1，擅长多个特工角色，精通各种战术配合。参与过多次线下比赛，团队协作能力强，战术理解深刻。
-                        </p>
-                        <div class="flex flex-wrap gap-4">
-                            <a href="#contact" class="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-custom flex items-center">
-                                <i class="fa fa-user-plus mr-2"></i> 一起组队
-                            </a>
-                            <a href="#" class="bg-white hover:bg-gray-100 text-primary border border-primary font-medium px-6 py-3 rounded-lg shadow-sm hover:shadow-md transition-custom flex items-center">
-                                <i class="fa fa-trophy mr-2"></i> 比赛记录
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 特工精通部分 -->
-        <section id="agents" class="py-20 bg-white">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                    <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-4">精通特工</h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">我掌握了多种瓦罗兰特的特工及其技能组合，能够根据团队需求灵活选择</p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- 特工卡片 1 -->
-                    <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom border border-gray-100">
-                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fa fa-bolt text-2xl text-primary"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-3">捷力</h3>
-                        <p class="text-gray-600 mb-4">擅长利用机动性突破敌方防线，烟雾弹封锁视野配合闪光弹快速清场</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">机动性</span>
-                            <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">突破</span>
-                            <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">烟雾弹</span>
-                            <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">闪光</span>
-                        </div>
-                    </div>
-                    
-                    <!-- 特工卡片 2 -->
-                    <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom border border-gray-100">
-                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fa fa-shield text-2xl text-secondary"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-3">布史东</h3>
-                        <p class="text-gray-600 mb-4">团队核心防守专家，能够有效控制区域并为队友提供保护和信息</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">防守</span>
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">控制</span>
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">烟雾</span>
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">团队支援</span>
-                        </div>
-                    </div>
-                    
-                    <!-- 特工卡片 3 -->
-                    <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom border border-gray-100">
-                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fa fa-eye text-2xl text-purple-600"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-3">猎枭</h3>
-                        <p class="text-gray-600 mb-4">精准的信息收集者，无人机和绊线能够为团队提供关键敌方位置信息</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">信息</span>
-                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">侦查</span>
-                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">控制</span>
-                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">辅助</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 技能熟练度 -->
-                <div class="mt-16">
-                    <h3 class="text-xl font-semibold mb-8 text-center">特工熟练度</h3>
-                    
-                    <div class="space-y-6 max-w-3xl mx-auto">
-                        <!-- 特工熟练度 1 -->
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium">捷力</span>
-                                <span>95%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-primary h-2.5 rounded-full" style="width: 95%"></div>
-                            </div>
-                        </div>
-                        
-                        <!-- 特工熟练度 2 -->
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium">布史东</span>
-                                <span>90%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-primary h-2.5 rounded-full" style="width: 90%"></div>
-                            </div>
-                        </div>
-                        
-                        <!-- 特工熟练度 3 -->
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium">猎枭</span>
-                                <span>85%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-primary h-2.5 rounded-full" style="width: 85%"></div>
-                            </div>
-                        </div>
-                        
-                        <!-- 特工熟练度 4 -->
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium">夜戮</span>
-                                <span>80%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-primary h-2.5 rounded-full" style="width: 80%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 游戏经历 -->
-        <section id="experience" class="py-20 bg-gray-50">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                    <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-4">游戏经历</h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">从瓦罗兰特上线以来，我积累了丰富的游戏经验和团队协作经历</p>
-                </div>
-                
-                <div class="relative max-w-4xl mx-auto">
-                    <!-- 时间线中轴线 -->
-                    <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 transform md:translate-x-px"></div>
-                    
-                    <!-- 经历项 1 -->
-                    <div class="relative mb-12">
-                        <div class="flex flex-col md:flex-row items-start">
-                            <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 mt-6 md:mt-0">
-                                <h3 class="text-xl font-semibold text-dark">战队队长</h3>
-                                <p class="text-primary font-medium">烈火战队</p>
-                                <p class="text-gray-500 mt-1">2022年3月 - 至今</p>
-                                <p class="text-gray-600 mt-3">担任战队队长，负责战术制定和队员训练计划。带领团队参加多次线上比赛，取得优异成绩。擅长根据对手特点调整战术，提高团队胜率。</p>
-                                <div class="flex flex-wrap justify-end gap-2 mt-4">
-                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">指挥</span>
-                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">战术制定</span>
-                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">团队管理</span>
-                                </div>
-                            </div>
-                            
-                            <!-- 时间点标记 -->
-                            <div class="absolute left-0 md:left-1/2 w-6 h-6 rounded-full bg-primary shadow transform -translate-x-1/2 md:translate-x-px z-10"></div>
-                            
-                            <div class="md:w-1/2 md:pl-12 order-1 md:order-2">
-                                <img src="https://picsum.photos/seed/valorant-team1/300/200" alt="战队照片" class="rounded-lg shadow-sm w-full max-w-xs">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- 经历项 2 -->
-                    <div class="relative mb-12">
-                        <div class="flex flex-col md:flex-row items-start">
-                            <div class="md:w-1/2 md:pr-12 order-2 md:order-1 mt-6 md:mt-0">
-                                <img src="https://picsum.photos/seed/valorant-comp2/300/200" alt="比赛照片" class="rounded-lg shadow-sm w-full max-w-xs ml-auto">
-                            </div>
-                            
-                            <!-- 时间点标记 -->
-                            <div class="absolute left-0 md:left-1/2 w-6 h-6 rounded-full bg-primary shadow transform -translate-x-1/2 md:translate-x-px z-10"></div>
-                            
-                            <div class="md:w-1/2 md:pl-12 order-1 md:order-2">
-                                <h3 class="text-xl font-semibold text-dark">主力选手</h3>
-                                <p class="text-primary font-medium">极光战队</p>
-                                <p class="text-gray-500 mt-1">2021年5月 - 2022年2月</p>
-                                <p class="text-gray-600 mt-3">作为团队主力突破手，擅长使用捷力和芮娜进行正面突破。参与多场地区性比赛，帮助团队获得两次亚军和一次季军。</p>
-                                <div class="flex flex-wrap gap-2 mt-4">
-                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">突破手</span>
-                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">主攻</span>
-                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">残局处理</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- 经历项 3 -->
-                    <div class="relative">
-                        <div class="flex flex-col md:flex-row items-start">
-                            <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 mt-6 md:mt-0">
-                                <h3 class="text-xl font-semibold text-dark">休闲玩家到进阶</h3>
-                                <p class="text-primary font-medium">个人排位</p>
-                                <p class="text-gray-500 mt-1">2020年7月 - 2021年4月</p>
-                                <p class="text-gray-600 mt-3">从瓦罗兰特上线初期开始接触游戏，快速提升技术水平，从青铜段位一路打到钻石。研究各种特工技巧和地图战术，积累了丰富的个人作战经验。</p>
-                                <div class="flex flex-wrap justify-end gap-2 mt-4">
-                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm"> solo queue</span>
-                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">多特工精通</span>
-                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">战术研究</span>
-                                </div>
-                            </div>
-                            
-                            <!-- 时间点标记 -->
-                            <div class="absolute left-0 md:left-1/2 w-6 h-6 rounded-full bg-primary shadow transform -translate-x-1/2 md:translate-x-px z-10"></div>
-                            
-                            <div class="md:w-1/2 md:pl-12 order-1 md:order-2">
-                                <img src="https://picsum.photos/seed/valorant-rank/300/200" alt="段位截图" class="rounded-lg shadow-sm w-full max-w-xs">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 比赛成绩 -->
-        <section id="achievements" class="py-20 bg-white">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                    <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-4">比赛成绩</h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">参与各类瓦罗兰特比赛，积累了丰富的赛事经验并取得了一定成绩</p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                    <!-- 成绩项 1 -->
-                    <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom border border-gray-100">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 class="text-xl font-semibold text-dark">城市挑战赛</h3>
-                                <p class="text-primary font-medium">冠军</p>
-                            </div>
-                            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">2023年5月</span>
-                        </div>
-                        <h4 class="font-medium mb-3">烈火战队 | 队长/指挥</h4>
-                        <p class="text-gray-600 mb-4">带领团队在32支队伍中脱颖而出，决赛中以2:1战胜对手获得冠军。个人获得总决赛MVP，场均击杀21.3，KD比1.8。</p>
-                        <p class="text-gray-600"><span class="font-medium">使用特工：</span>捷力、猎枭</p>
-                    </div>
-                    
-                    <!-- 成绩项 2 -->
-                    <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom border border-gray-100">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 class="text-xl font-semibold text-dark">高校联赛</h3>
-                                <p class="text-primary font-medium">亚军</p>
-                            </div>
-                            <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">2022年11月</span>
-                        </div>
-                        <h4 class="font-medium mb-3">烈火战队 | 队长/突破</h4>
-                        <p class="text-gray-600 mb-4">在高校联赛中带领团队获得亚军，赛事中共击杀326人，助攻128次。半决赛中完成关键1v3残局，帮助团队晋级决赛。</p>
-                        <p class="text-gray-600"><span class="font-medium">使用特工：</span>捷力、夜戮</p>
-                    </div>
-                    
-                    <!-- 成绩项 3 -->
-                    <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom border border-gray-100">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 class="text-xl font-semibold text-dark">线上公开赛</h3>
-                                <p class="text-primary font-medium">季军</p>
-                            </div>
-                            <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm">2022年3月</span>
-                        </div>
-                        <h4 class="font-medium mb-3">极光战队 | 主力队员</h4>
-                        <p class="text-gray-600 mb-4">作为团队主力突破手，在比赛中表现出色，多次帮助团队打开局面。赛事KD比1.6，获得"最佳突破手"提名。</p>
-                        <p class="text-gray-600"><span class="font-medium">使用特工：</span>芮娜、捷力</p>
-                    </div>
-                    
-                    <!-- 成绩项 4 -->
-                    <div class="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom border border-gray-100">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 class="text-xl font-semibold text-dark">社区杯赛</h3>
-                                <p class="text-primary font-medium">冠军</p>
-                            </div>
-                            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">2021年8月</span>
-                        </div>
-                        <h4 class="font-medium mb-3">极光战队 | 队员</h4>
-                        <p class="text-gray-600 mb-4">在16支社区队伍中夺冠，决赛中以13:11险胜对手。个人在决赛中使用布史东的烟雾弹战术成为制胜关键。</p>
-                        <p class="text-gray-600"><span class="font-medium">使用特工：</span>布史东、猎枭</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 联系方式 -->
-        <section id="contact" class="py-20 bg-gradient-to-br from-red-50 to-purple-50">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                    <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-4">联系方式</h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">如果想一起组队打瓦罗兰特，或者有比赛机会，欢迎随时联系我</p>
-                </div>
-                
-                <div class="max-w-4xl mx-auto">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                        <!-- 联系信息 -->
-                        <div>
-                            <div class="bg-white rounded-xl p-8 shadow-sm h-full">
-                                <h3 class="text-xl font-semibold mb-6">游戏账号</h3>
-                                
-                                <div class="space-y-6">
-                                    <div class="flex items-start">
-                                        <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                            <i class="fa fa-gamepad text-primary"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-medium mb-1">瓦罗兰特ID</h4>
-                                            <p class="text-gray-600">蔡颐城#CN1</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="flex items-start">
-                                        <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                            <i class="fa fa-qq text-primary"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-medium mb-1">QQ</h4>
-                                            <p class="text-gray-600">123456789</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="flex items-start">
-                                        <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                                            <i class="fa fa-weixin text-primary"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-medium mb-1">微信</h4>
-                                            <p class="text-gray-600">CaiYiCheng_VAL</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="mt-8">
-                                    <h4 class="font-medium mb-4">社交平台</h4>
-                                    <div class="flex space-x-4">
-                                        <a href="#" class="w-10 h-10 bg-red-100 hover:bg-red-200 text-primary rounded-full flex items-center justify-center transition-custom">
-                                            <i class="fa fa-bilibili"></i>
-                                        </a>
-                                        <a href="#" class="w-10 h-10 bg-red-100 hover:bg-red-200 text-primary rounded-full flex items-center justify-center transition-custom">
-                                            <i class="fa fa-youtube-play"></i>
-                                        </a>
-                                        <a href="#" class="w-10 h-10 bg-red-100 hover:bg-red-200 text-primary rounded-full flex items-center justify-center transition-custom">
-                                            <i class="fa fa-twitch"></i>
-                                        </a>
-                                        <a href="#" class="w-10 h-10 bg-red-100 hover:bg-red-200 text-primary rounded-full flex items-center justify-center transition-custom">
-                                            <i class="fa fa-weibo"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- 联系表单 -->
-                        <div>
-                            <div class="bg-white rounded-xl p-8 shadow-sm">
-                                <h3 class="text-xl font-semibold mb-6">发送消息</h3>
-                                
-                                <form>
-                                    <div class="mb-4">
-                                        <label for="name" class="block text-gray-700 font-medium mb-2">你的游戏ID</label>
-                                        <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-custom" placeholder="你的瓦罗兰特ID">
-                                    </div>
-                                    
-                                    <div class="mb-4">
-                                        <label for="email" class="block text-gray-700 font-medium mb-2">联系方式</label>
-                                        <input type="text" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-custom" placeholder="QQ或微信">
-                                    </div>
-                                    
-                                    <div class="mb-6">
-                                        <label for="message" class="block text-gray-700 font-medium mb-2">消息内容</label>
-                                        <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-custom" placeholder="想一起组队或有其他事情..."></textarea>
-                                    </div>
-                                    
-                                    <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-lg shadow-sm hover:shadow-md transition-custom flex items-center justify-center">
-                                        <i class="fa fa-paper-plane mr-2"></i> 发送消息
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- 页脚 -->
-    <footer class="bg-dark text-white py-8">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <p class="text-gray-400">© 2023 蔡颐城的瓦罗兰特主页. 保留所有权利.</p>
-                </div>
-                
-                <div class="flex space-x-6">
-                    <a href="#about" class="text-gray-400 hover:text-white transition-custom">关于我</a>
-                    <a href="#agents" class="text-gray-400 hover:text-white transition-custom">特工精通</a>
-                    <a href="#experience" class="text-gray-400 hover:text-white transition-custom">游戏经历</a>
-                    <a href="#achievements" class="text-gray-400 hover:text-white transition-custom">比赛成绩</a>
-                    <a href="#contact" class="text-gray-400 hover:text-white transition-custom">联系方式</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- 返回顶部按钮 -->
-    <button id="back-to-top" class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:bg-primary/90">
-        <i class="fa fa-arrow-up"></i>
-    </button>
-
-    <!-- JavaScript -->
     <script>
-        // 移动端菜单切换
-        const menuToggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
+        // 游戏变量
+        let canvas, ctx;
+        let player;
+        let hydrants = [];
+        let score = 0;
+        let gameActive = false;
+        let gameSpeed = 3;
+        let spawnRate = 60;
+        let frameCount = 0;
+        let lanes = [];
+        let canvasWidth, canvasHeight;
+        let lastTimestamp = 0;
         
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+        // 初始化游戏
+        function initGame() {
+            setupCanvas();
+            
+            // 初始化玩家
+            player = {
+                x: canvasWidth / 2,
+                y: canvasHeight - 100,
+                width: 70,
+                height: 90,
+                lane: 1,
+                color: '#4CAF50',
+                name: '蔡颐城'
+            };
+            
+            // 设置车道位置
+            lanes = [
+                canvasWidth * 0.25,
+                canvasWidth * 0.5,
+                canvasWidth * 0.75
+            ];
+            
+            // 重置游戏状态
+            hydrants = [];
+            score = 0;
+            gameActive = true;
+            gameSpeed = 3;
+            spawnRate = 60;
+            frameCount = 0;
+            lastTimestamp = 0;
+            
+            // 更新分数显示
+            document.getElementById('score-display').textContent = `得分: ${score}`;
+            
+            // 隐藏开始界面，显示游戏
+            document.getElementById('start-screen').classList.remove('active');
+            document.getElementById('game-over-screen').classList.remove('active');
+            
+            // 开始游戏循环
+            requestAnimationFrame(gameLoop);
+        }
         
-        // 导航栏滚动效果
-        const navbar = document.getElementById('navbar');
-        const backToTop = document.getElementById('back-to-top');
+        // 设置Canvas尺寸
+        function setupCanvas() {
+            canvas = document.getElementById('game-canvas');
+            ctx = canvas.getContext('2d');
+            
+            // 设置Canvas大小为容器大小
+            const container = document.getElementById('game-container');
+            canvasWidth = canvas.width = container.clientWidth;
+            canvasHeight = canvas.height = container.clientHeight;
+        }
         
-        window.addEventListener('scroll', () => {
-            // 导航栏效果
-            if (window.scrollY > 100) {
-                navbar.classList.add('py-2', 'shadow');
-                navbar.classList.remove('py-4');
-            } else {
-                navbar.classList.add('py-4');
-                navbar.classList.remove('py-2', 'shadow');
+        // 游戏主循环
+        function gameLoop(timestamp) {
+            if (!gameActive) return;
+            
+            // 计算时间增量，确保平滑动画
+            const deltaTime = timestamp - lastTimestamp;
+            lastTimestamp = timestamp;
+            
+            // 限制帧率，减少闪烁
+            if (deltaTime < 16) { // 约60fps
+                requestAnimationFrame(gameLoop);
+                return;
             }
             
-            // 返回顶部按钮
-            if (window.scrollY > 500) {
-                backToTop.classList.remove('opacity-0', 'invisible');
-                backToTop.classList.add('opacity-100', 'visible');
-            } else {
-                backToTop.classList.add('opacity-0', 'invisible');
-                backToTop.classList.remove('opacity-100', 'visible');
+            // 清除画布
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+            
+            // 绘制背景
+            drawBackground();
+            
+            // 更新和绘制消防栓
+            updateHydrants();
+            
+            // 绘制玩家
+            drawPlayer();
+            
+            // 生成新的消防栓
+            frameCount++;
+            if (frameCount % spawnRate === 0) {
+                spawnHydrant();
+                // 随着游戏进行，增加难度
+                if (spawnRate > 20) spawnRate -= 0.5;
+                if (gameSpeed < 8) gameSpeed += 0.05;
             }
-        });
+            
+            // 增加分数
+            score++;
+            document.getElementById('score-display').textContent = `得分: ${score}`;
+            
+            // 继续循环
+            requestAnimationFrame(gameLoop);
+        }
         
-        // 返回顶部功能
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-        
-        // 平滑滚动到锚点
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
+        // 绘制背景
+        function drawBackground() {
+            // 绘制天空
+            const skyGradient = ctx.createLinearGradient(0, 0, 0, canvasHeight);
+            skyGradient.addColorStop(0, '#87CEEB');
+            skyGradient.addColorStop(1, '#E0F7FA');
+            ctx.fillStyle = skyGradient;
+            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+            
+            // 绘制道路
+            const roadWidth = canvasWidth * 0.8;
+            const roadX = (canvasWidth - roadWidth) / 2;
+            ctx.fillStyle = '#424242';
+            ctx.fillRect(roadX, 0, roadWidth, canvasHeight);
+            
+            // 绘制车道分隔线
+            ctx.strokeStyle = '#FFFFFF';
+            ctx.lineWidth = 5;
+            ctx.setLineDash([20, 30]);
+            
+            ctx.beginPath();
+            ctx.moveTo(roadX + roadWidth * 1/3, 0);
+            ctx.lineTo(roadX + roadWidth * 1/3, canvasHeight);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(roadX + roadWidth * 2/3, 0);
+            ctx.lineTo(roadX + roadWidth * 2/3, canvasHeight);
+            ctx.stroke();
+            
+            ctx.setLineDash([]);
+            
+            // 绘制草地
+            ctx.fillStyle = '#388E3C';
+            ctx.fillRect(0, 0, roadX, canvasHeight);
+            ctx.fillRect(roadX + roadWidth, 0, roadX, canvasHeight);
+            
+            // 绘制远处建筑物
+            ctx.fillStyle = '#78909C';
+            for (let i = 0; i < 5; i++) {
+                const buildingHeight = 80 + Math.random() * 100;
+                ctx.fillRect(roadX + 50 + i * 150, canvasHeight - buildingHeight, 80, buildingHeight);
                 
-                // 关闭移动菜单（如果打开）
-                if (!mobileMenu.classList.contains('hidden')) {
-                    mobileMenu.classList.add('hidden');
+                // 绘制窗户
+                ctx.fillStyle = '#FFD600';
+                for (let j = 0; j < 4; j++) {
+                    for (let k = 0; k < 4; k++) {
+                        ctx.fillRect(roadX + 60 + i * 150 + j * 20, canvasHeight - buildingHeight + 20 + k * 25, 10, 15);
+                    }
+                }
+                ctx.fillStyle = '#78909C';
+            }
+        }
+        
+        // 绘制玩家
+        function drawPlayer() {
+            // 绘制玩家身体
+            ctx.fillStyle = player.color;
+            ctx.beginPath();
+            roundRect(ctx, player.x - player.width/2, player.y - player.height/2, player.width, player.height, 10);
+            ctx.fill();
+            
+            // 绘制玩家头部
+            ctx.fillStyle = '#FFCCBC';
+            ctx.beginPath();
+            ctx.arc(player.x, player.y - player.height/2, 20, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 绘制眼睛
+            ctx.fillStyle = '#000';
+            ctx.beginPath();
+            ctx.arc(player.x - 8, player.y - player.height/2 - 2, 4, 0, Math.PI * 2);
+            ctx.arc(player.x + 8, player.y - player.height/2 - 2, 4, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 绘制嘴巴
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(player.x, player.y - player.height/2 + 8, 8, 0.2 * Math.PI, 0.8 * Math.PI);
+            ctx.stroke();
+            
+            // 绘制手臂和腿
+            ctx.fillStyle = player.color;
+            ctx.fillRect(player.x - player.width/2 - 10, player.y - player.height/2 + 15, 10, 30);
+            ctx.fillRect(player.x + player.width/2, player.y - player.height/2 + 15, 10, 30);
+            ctx.fillRect(player.x - player.width/2, player.y + player.height/2 - 20, 15, 30);
+            ctx.fillRect(player.x + player.width/2 - 15, player.y + player.height/2 - 20, 15, 30);
+            
+            // 在身体上绘制名字"蔡颐城"
+            ctx.font = 'bold 18px "Microsoft YaHei", Arial, sans-serif';
+            ctx.fillStyle = '#FFFFFF';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(player.name, player.x, player.y - 5);
+            
+            // 添加名字阴影效果
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.strokeText(player.name, player.x, player.y - 5);
+        }
+        
+        // 生成消防栓
+        function spawnHydrant() {
+            const lane = Math.floor(Math.random() * lanes.length);
+            
+            hydrants.push({
+                x: lanes[lane],
+                y: -50,
+                width: 50,
+                height: 70,
+                speed: gameSpeed,
+                color: '#FF5722'
+            });
+        }
+        
+        // 更新消防栓位置
+        function updateHydrants() {
+            for (let i = hydrants.length - 1; i >= 0; i--) {
+                const hydrant = hydrants[i];
+                
+                // 更新位置
+                hydrant.y += hydrant.speed;
+                
+                // 绘制消防栓
+                drawHydrant(hydrant);
+                
+                // 检测碰撞
+                if (isColliding(player, hydrant)) {
+                    gameOver();
+                    return;
                 }
                 
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
+                // 移除超出屏幕的消防栓
+                if (hydrant.y > canvasHeight + 100) {
+                    hydrants.splice(i, 1);
+                }
+            }
+        }
+        
+        // 绘制精致的消防栓
+        function drawHydrant(hydrant) {
+            const {x, y, width, height} = hydrant;
+            
+            // 消防栓主体
+            ctx.fillStyle = '#D32F2F';
+            ctx.beginPath();
+            roundRect(ctx, x - width/2, y - height/2, width, height * 0.8, 10);
+            ctx.fill();
+            
+            // 消防栓顶部
+            ctx.fillStyle = '#FFC107';
+            ctx.beginPath();
+            ctx.arc(x, y - height/2, width/2, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 顶部细节
+            ctx.fillStyle = '#FFA000';
+            ctx.beginPath();
+            ctx.arc(x, y - height/2, width/3, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 消防栓接口
+            ctx.fillStyle = '#757575';
+            ctx.beginPath();
+            ctx.arc(x, y - height/2, width/6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 消防栓侧面接口
+            ctx.fillStyle = '#9E9E9E';
+            ctx.beginPath();
+            ctx.arc(x - width/2, y - height/4, width/5, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(x + width/2, y - height/4, width/5, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 添加高光
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.beginPath();
+            ctx.arc(x - width/4, y - height/2 + 5, width/8, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 添加阴影
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+            ctx.beginPath();
+            ctx.arc(x + width/4, y - height/2 + 5, width/8, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 底座
+            ctx.fillStyle = '#9E9E9E';
+            ctx.beginPath();
+            roundRect(ctx, x - width/2 - 5, y + height/2 - 10, width + 10, 10, 5);
+            ctx.fill();
+            
+            // 添加反光效果
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.beginPath();
+            ctx.moveTo(x - width/2, y - height/2);
+            ctx.lineTo(x - width/2, y + height/2 - 10);
+            ctx.lineTo(x - width/4, y + height/2 - 10);
+            ctx.lineTo(x - width/4, y - height/2);
+            ctx.closePath();
+            ctx.fill();
+        }
+        
+        // 碰撞检测
+        function isColliding(obj1, obj2) {
+            return obj1.x - obj1.width/2 < obj2.x + obj2.width/2 &&
+                   obj1.x + obj1.width/2 > obj2.x - obj2.width/2 &&
+                   obj1.y - obj1.height/2 < obj2.y + obj2.height/2 &&
+                   obj1.y + obj1.height/2 > obj2.y - obj2.height/2;
+        }
+        
+        // 游戏结束
+        function gameOver() {
+            gameActive = false;
+            document.getElementById('final-score').textContent = score;
+            document.getElementById('game-over-screen').classList.add('active');
+        }
+        
+        // 移动玩家
+        function movePlayer(direction) {
+            if (!gameActive) return;
+            
+            if (direction === 'left' && player.lane > 0) {
+                player.lane--;
+            } else if (direction === 'right' && player.lane < lanes.length - 1) {
+                player.lane++;
+            }
+            
+            player.x = lanes[player.lane];
+        }
+        
+        // 圆角矩形函数
+        function roundRect(ctx, x, y, width, height, radius) {
+            if (width < 2 * radius) radius = width / 2;
+            if (height < 2 * radius) radius = height / 2;
+            
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.arcTo(x + width, y, x + width, y + radius, radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.arcTo(x + width, y + height, x + width - radius, y + height, radius);
+            ctx.lineTo(x + radius, y + height);
+            ctx.arcTo(x, y + height, x, y + height - radius, radius);
+            ctx.lineTo(x, y + radius);
+            ctx.arcTo(x, y, x + radius, y, radius);
+            ctx.closePath();
+        }
+        
+        // 设置事件监听器
+        function setupEventListeners() {
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    movePlayer('left');
+                } else if (e.key === 'ArrowRight') {
+                    movePlayer('right');
                 }
             });
-        });
-        
-        // 滚动动画
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-fade-in');
-                    observer.unobserve(entry.target);
-                }
+            
+            document.getElementById('left-btn').addEventListener('click', () => {
+                movePlayer('left');
             });
-        }, observerOptions);
+            
+            document.getElementById('right-btn').addEventListener('click', () => {
+                movePlayer('right');
+            });
+            
+            document.getElementById('start-button').addEventListener('click', initGame);
+            document.getElementById('restart-button').addEventListener('click', initGame);
+        }
         
-        // 观察所有section
-        document.querySelectorAll('section > div > div').forEach(section => {
-            observer.observe(section);
+        // 初始化游戏
+        function initializeGame() {
+            // 添加圆角矩形支持
+            if (!CanvasRenderingContext2D.prototype.roundRect) {
+                CanvasRenderingContext2D.prototype.roundRect = roundRect;
+            }
+            
+            setupCanvas();
+            setupEventListeners();
+            
+            // 设置初始车道位置
+            lanes = [
+                canvasWidth * 0.25,
+                canvasWidth * 0.5,
+                canvasWidth * 0.75
+            ];
+        }
+        
+        // 页面加载完成后初始化游戏
+        window.addEventListener('load', initializeGame);
+        
+        // 窗口大小变化时调整Canvas
+        window.addEventListener('resize', () => {
+            if (!gameActive) {
+                setupCanvas();
+                // 设置初始车道位置
+                lanes = [
+                    canvasWidth * 0.25,
+                    canvasWidth * 0.5,
+                    canvasWidth * 0.75
+                ];
+            }
         });
     </script>
 </body>
