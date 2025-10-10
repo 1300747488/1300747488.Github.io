@@ -1,718 +1,698 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>蔡颐城跑酷 - 不要撞上消防栓</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-        }
-        
-        body {
-            font-family: 'Arial Rounded MT Bold', 'Helvetica', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            touch-action: manipulation;
-        }
-        
-        #game-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            height: 100vh;
-            max-height: 600px;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
-        
-        canvas {
-            background: linear-gradient(to bottom, #87CEEB, #E0F7FA);
-            display: block;
-            width: 100%;
-            height: 100%;
-            border-radius: 20px;
-        }
-        
-        #ui-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-        
-        .screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.85);
-            color: white;
-            text-align: center;
-            border-radius: 20px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease-in-out;
-            padding: 20px;
-            z-index: 100;
-        }
-        
-        .screen.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            text-shadow: 3px 3px 0 #000, 1px 1px 5px rgba(0,0,0,0.8);
-            color: #FF5722;
-            background: linear-gradient(to right, #FF5722, #FF9800);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-        
-        h2 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            color: #FF9800;
-            text-shadow: 2px 2px 0 #000, 1px 1px 3px rgba(0,0,0,0.8);
-            font-weight: bold;
-        }
-        
-        p {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            max-width: 90%;
-            text-shadow: 1px 1px 0 #000, 1px 1px 3px rgba(0,0,0,0.8);
-            line-height: 1.5;
-            font-weight: 500;
-        }
-        
-        .button {
-            padding: 15px 40px;
-            font-size: 1.5rem;
-            background: linear-gradient(to bottom, #FF5722, #E64A19);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            margin-top: 30px;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s;
-            pointer-events: auto;
-            text-shadow: 1px 1px 0 #000;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .button:hover {
-            background: linear-gradient(to bottom, #FF9800, #F57C00);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        }
-        
-        .button:active {
-            transform: translateY(0);
-        }
-        
-        #score-display {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #333;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 12px 24px;
-            border-radius: 50px;
-            pointer-events: none;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            z-index: 10;
-            text-shadow: 1px 1px 0 rgba(255,255,255,0.8);
-            border: 2px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        .controls {
-            position: absolute;
-            bottom: 30px;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 0 20px;
-            pointer-events: none;
-            z-index: 10;
-        }
-        
-        .control-btn {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(to bottom, rgba(255, 87, 34, 0.9), rgba(230, 74, 25, 0.9));
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 40px;
-            color: white;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            cursor: pointer;
-            pointer-events: auto;
-            user-select: none;
-            text-shadow: 1px 1px 0 #000;
-            border: 3px solid rgba(255, 255, 255, 0.5);
-            transition: transform 0.1s;
-        }
-        
-        .control-btn:active {
-            background: linear-gradient(to bottom, rgba(255, 152, 0, 0.9), rgba(245, 124, 0, 0.9));
-            transform: scale(0.95);
-        }
-        
-        #instructions {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            color: #BBDEFB;
-            text-shadow: 1px 1px 0 #000;
-        }
-        
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.8rem;
-            }
-            
-            h2 {
-                font-size: 2rem;
-            }
-            
-            p {
-                font-size: 1.2rem;
-            }
-            
-            .button {
-                font-size: 1.2rem;
-                padding: 12px 30px;
-            }
-            
-            #score-display {
-                font-size: 1.5rem;
-                top: 15px;
-                left: 15px;
-                padding: 10px 20px;
-            }
-            
-            .control-btn {
-                width: 70px;
-                height: 70px;
-                font-size: 35px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            h2 {
-                font-size: 1.8rem;
-            }
-            
-            p {
-                font-size: 1rem;
-            }
-            
-            .button {
-                font-size: 1rem;
-                padding: 10px 25px;
-            }
-            
-            #score-display {
-                font-size: 1.2rem;
-                top: 10px;
-                left: 10px;
-                padding: 8px 16px;
-            }
-            
-            .control-btn {
-                width: 60px;
-                height: 60px;
-                font-size: 30px;
-            }
-            
-            .controls {
-                bottom: 20px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>杜荣英 - 专业月嫂简历</title>
+  <!-- 微信分享相关meta标签 -->
+  <meta property="og:title" content="杜荣英 - 专业月嫂简历">
+  <meta property="og:description" content="10年月嫂经验，服务过38个家庭，专业护理母婴健康">
+  <meta property="og:image" content="https://via.placeholder.com/300">
+  <meta property="og:url" content="https://yuesao.com/resume/000014">
+  <meta name="twitter:card" content="summary_large_image">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#f87c9c',
+            secondary: '#ffe6ec',
+            accent: '#ff9db6',
+            text: '#333',
+            light: '#fff5f7',
+            dark: '#4a4a4a',
+          },
+          fontFamily: {
+            sans: ['Microsoft YaHei', 'sans-serif'],
+            serif: ['Noto Serif SC', 'serif'],
+          },
+          boxShadow: {
+            'soft': '0 2px 10px rgba(248, 124, 156, 0.1)',
+            'medium': '0 4px 20px rgba(248, 124, 156, 0.15)',
+          }
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .section-header {
+        @apply bg-gradient-to-r from-primary to-accent text-white py-3 px-4 text-base font-bold rounded-t-lg shadow-sm;
+      }
+      .tab-active {
+        @apply text-primary border-b-2 border-primary font-semibold;
+      }
+      .tab-inactive {
+        @apply text-gray-500 hover:text-primary transition-colors duration-200;
+      }
+      .card {
+        @apply bg-white rounded-lg shadow-medium mb-5 overflow-hidden;
+      }
+      .img-hover {
+        @apply transition-transform duration-300 hover:scale-105 cursor-pointer;
+      }
+      .tag {
+        @apply bg-secondary text-primary text-xs px-2 py-1 rounded-full font-medium;
+      }
+      .skill-tag {
+        @apply bg-light text-dark text-xs px-3 py-1 rounded-full mr-2 mb-2 inline-block;
+      }
+    }
+  </style>
 </head>
-<body>
-    <div id="game-container">
-        <canvas id="game-canvas"></canvas>
-        
-        <div id="ui-layer">
-            <div id="score-display">得分: 0</div>
-            
-            <div id="start-screen" class="screen active">
-                <h1>蔡颐城跑酷</h1>
-                <p>控制蔡颐城躲避消防栓！不要撞上！</p>
-                <p>蔡是蔡依林的蔡，颐是颐和园的颐，城是城市的城</p>
-                <button class="button" id="start-button">开始游戏</button>
-                <div id="instructions">
-                    ← 向左移动 | 向右移动 →
-                </div>
-            </div>
-            
-            <div id="game-over-screen" class="screen">
-                <h2>哎呀！蔡颐城撞上消防栓了！</h2>
-                <p>蔡颐城被紧急送往医院治疗...</p>
-                <p>最终得分: <span id="final-score">0</span></p>
-                <button class="button" id="restart-button">重新开始</button>
-            </div>
-            
-            <div class="controls">
-                <div class="control-btn" id="left-btn">←</div>
-                <div class="control-btn" id="right-btn">→</div>
-            </div>
+<body class="bg-gray-50 text-text font-sans">
+  <!-- 顶部浮动联系和留言按钮 -->
+  <div class="fixed top-0 left-0 right-0 bg-white shadow-md py-2 px-4 flex justify-between items-center z-50">
+    <div class="flex items-center">
+      <img src="https://via.placeholder.com/40" alt="杜荣英头像" class="w-8 h-8 rounded-full object-cover mr-2">
+      <span class="font-medium text-sm">杜荣英 - 专业月嫂</span>
+    </div>
+    <div class="flex space-x-2">
+      <button id="contactFloatBtn" class="bg-primary text-white text-sm px-4 py-1.5 rounded-full font-medium">
+        <i class="fas fa-comment-alt mr-1"></i> 联系
+      </button>
+      <button id="messageFloatBtn" class="bg-white border border-primary text-primary text-sm px-4 py-1.5 rounded-full font-medium">
+        <i class="fas fa-pencil-alt mr-1"></i> 留言
+      </button>
+    </div>
+  </div>
+
+  <!-- 顶部标题栏 -->
+  <div class="bg-gradient-to-r from-primary to-accent text-white text-center text-sm py-3 shadow-md mt-12">
+    <i class="fas fa-baby mr-2"></i>合肥市庐阳区悦悦母婴护理馆北门习惯良好刘家政
+  </div>
+
+  <!-- 个人信息头部 -->
+  <div class="card mx-4 mt-4">
+    <div class="flex flex-col md:flex-row justify-center items-center p-6">
+      <div class="relative">
+        <img src="https://via.placeholder.com/120" alt="杜荣英头像" class="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md">
+        <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-primary text-white text-xs px-3 py-1 rounded-full">
+          中级月嫂
         </div>
+      </div>
+      <div class="ml-0 mt-4 md:ml-6 md:mt-0 text-center md:text-left">
+        <h1 class="text-2xl font-bold text-primary">杜荣英</h1>
+        <div class="flex items-center justify-center md:justify-start mt-1">
+          <span class="text-sm text-gray-600">51岁</span>
+          <span class="mx-2 text-gray-300">|</span>
+          <span class="text-sm text-gray-600">10年经验</span>
+          <span class="mx-2 text-gray-300">|</span>
+          <span class="text-sm text-gray-600">服务过38个家庭</span>
+        </div>
+        <div class="mt-3 flex flex-wrap justify-center md:justify-start">
+          <span class="tag mr-2 mb-2">带过早产儿</span>
+          <span class="tag mr-2 mb-2">育儿嫂</span>
+          <span class="tag mr-2 mb-2">煮饭</span>
+          <span class="tag mr-2 mb-2">育婴师</span>
+        </div>
+      </div>
     </div>
 
-    <script>
-        // 游戏变量
-        let canvas, ctx;
-        let player;
-        let hydrants = [];
-        let score = 0;
-        let gameActive = false;
-        let gameSpeed = 3;
-        let spawnRate = 60;
-        let frameCount = 0;
-        let lanes = [];
-        let canvasWidth, canvasHeight;
-        let lastTimestamp = 0;
+    <!-- 导航标签栏 -->
+    <div class="flex overflow-x-auto text-sm border-t border-gray-100 mt-4 px-2">
+      <div class="tab-active px-4 py-3 flex-shrink-0">个人信息</div>
+      <div class="tab-inactive px-4 py-3 flex-shrink-0">安全保障</div>
+      <div class="tab-inactive px-4 py-3 flex-shrink-0">工作生活照</div>
+      <div class="tab-inactive px-4 py-3 flex-shrink-0">资格证书</div>
+      <div class="tab-inactive px-4 py-3 flex-shrink-0">体检报告</div>
+      <div class="tab-inactive px-4 py-3 flex-shrink-0">月子餐照片</div>
+      <div class="tab-inactive px-4 py-3 flex-shrink-0">客户好评</div>
+    </div>
+  </div>
+
+  <!-- 个人信息内容 -->
+  <div class="card mx-4">
+    <h2 class="section-header flex items-center">
+      <i class="fas fa-user-circle mr-2"></i>个人信息
+    </h2>
+    <div class="p-5 text-sm space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex">
+          <span class="font-bold text-gray-700 w-24 flex-shrink-0">性 别：</span>
+          <span>女</span>
+        </div>
+        <div class="flex">
+          <span class="font-bold text-gray-700 w-24 flex-shrink-0">婚姻状况：</span>
+          <span>已婚</span>
+        </div>
+        <div class="flex">
+          <span class="font-bold text-gray-700 w-24 flex-shrink-0">星 座：</span>
+          <span>金牛座</span>
+        </div>
+        <div class="flex">
+          <span class="font-bold text-gray-700 w-24 flex-shrink-0">编 号：</span>
+          <span>000014</span>
+        </div>
+        <div class="flex">
+          <span class="font-bold text-gray-700 w-24 flex-shrink-0">住家情况：</span>
+          <span>住家</span>
+        </div>
+        <div class="flex">
+          <span class="font-bold text-gray-700 w-24 flex-shrink-0">所在门店：</span>
+          <span>合肥市庐阳区悦悦母婴护理馆</span>
+        </div>
+        <div class="flex">
+          <span class="font-bold text-gray-700 w-24 flex-shrink-0">期望位置：</span>
+          <span>安徽合肥蜀山</span>
+        </div>
+      </div>
+      
+      <div class="pt-2">
+        <h3 class="font-bold text-gray-700 mb-3">专业技能：</h3>
+        <div class="flex flex-wrap">
+          <span class="skill-tag">中餐</span>
+          <span class="skill-tag">面食</span>
+          <span class="skill-tag">月子餐</span>
+          <span class="skill-tag">营养</span>
+          <span class="skill-tag">开奶</span>
+          <span class="skill-tag">产后恢复</span>
+          <span class="skill-tag">产奶指导</span>
+          <span class="skill-tag">催乳</span>
+          <span class="skill-tag">塑身</span>
+          <span class="skill-tag">母婴护理</span>
+          <span class="skill-tag">小儿推拿</span>
+          <span class="skill-tag">心率触诊</span>
+          <span class="skill-tag">恶露观察</span>
+          <span class="skill-tag">洗澡抚触</span>
+          <span class="skill-tag">满月汗</span>
+          <span class="skill-tag">早教</span>
+          <span class="skill-tag">辅食添加</span>
+          <span class="skill-tag">行为习惯</span>
+          <span class="skill-tag">益智互动</span>
+          <span class="skill-tag">被动操</span>
+          <span class="skill-tag">排气操</span>
+          <span class="skill-tag">肚脐护理</span>
+          <span class="skill-tag">乳头护理</span>
+          <span class="skill-tag">通乳</span>
+          <span class="skill-tag">婴儿游泳</span>
+          <span class="skill-tag">婴儿理发</span>
+          <span class="skill-tag">黄疸观察</span>
+          <span class="skill-tag">早教开发</span>
+          <span class="skill-tag">泌乳护理</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 安全保障 -->
+  <div class="card mx-4">
+    <h2 class="section-header flex items-center">
+      <i class="fas fa-shield-alt mr-2"></i>安全保障
+    </h2>
+    <div class="p-5 space-y-4 text-sm">
+      <div class="flex items-center bg-light rounded-lg p-3 shadow-sm">
+        <i class="fas fa-shield-check text-green-500 mr-3 text-xl"></i>
+        <div>
+          <h3 class="font-semibold">信用无犯罪记录</h3>
+          <p class="text-xs text-gray-500 mt-1">已通过公安机关无犯罪记录核查</p>
+        </div>
+      </div>
+      <div class="flex items-center bg-light rounded-lg p-3 shadow-sm">
+        <i class="fas fa-id-card text-blue-500 mr-3 text-xl"></i>
+        <div>
+          <h3 class="font-semibold">身份实名认证</h3>
+          <p class="text-xs text-gray-500 mt-1">身份证信息已核实并备案</p>
+        </div>
+      </div>
+      <div class="flex items-center bg-light rounded-lg p-3 shadow-sm">
+        <i class="fas fa-heartbeat text-red-500 mr-3 text-xl"></i>
+        <div>
+          <h3 class="font-semibold">健康体检报告</h3>
+          <p class="text-xs text-gray-500 mt-1">持有效健康证，定期体检</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 工作生活照 -->
+  <div class="card mx-4">
+    <h2 class="section-header flex items-center justify-between">
+      <span><i class="fas fa-camera mr-2"></i>工作生活照</span>
+      <span class="text-sm font-normal">27张</span>
+    </h2>
+    <div class="p-4 grid grid-cols-3 gap-3">
+      <!-- 显示前9张照片，其余可通过查看更多查看 -->
+      <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300" alt="工作照" class="w-full h-full object-cover">
+      </div>
+      <!-- 重复8次 -->
+      <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300?text=Photo2" alt="工作照" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300?text=Photo3" alt="工作照" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300?text=Photo4" alt="工作照" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300?text=Photo5" alt="工作照" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300?text=Photo6" alt="工作照" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300?text=Photo7" alt="工作照" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300?text=Photo8" alt="工作照" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden img-hover flex items-center justify-center">
+        <div class="text-center">
+          <i class="fas fa-images text-3xl text-primary mb-2"></i>
+          <p class="text-xs text-gray-600">查看更多</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 资格证书 -->
+  <div class="card mx-4">
+    <h2 class="section-header flex items-center justify-between">
+      <span><i class="fas fa-certificate mr-2"></i>资格证书</span>
+      <span class="text-sm font-normal">11张</span>
+    </h2>
+    <div class="p-4 grid grid-cols-2 md:grid-cols-3 gap-3">
+      <!-- 显示6张证书，其余可通过查看更多查看 -->
+      <div class="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300x400" alt="资格证书" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300x400?text=Cert2" alt="资格证书" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300x400?text=Cert3" alt="资格证书" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300x400?text=Cert4" alt="资格证书" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300x400?text=Cert5" alt="资格证书" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden img-hover flex items-center justify-center">
+        <div class="text-center">
+          <i class="fas fa-folder-open text-3xl text-primary mb-2"></i>
+          <p class="text-xs text-gray-600">查看更多</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 体检报告 -->
+  <div class="card mx-4">
+    <h2 class="section-header flex items-center justify-between">
+      <span><i class="fas fa-file-medical mr-2"></i>体检报告</span>
+      <span class="text-sm font-normal">3份</span>
+    </h2>
+    <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div class="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300x400" alt="体检报告" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300x400?text=Report2" alt="体检报告" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300x400?text=Report3" alt="体检报告" class="w-full h-full object-cover">
+      </div>
+    </div>
+  </div>
+
+  <!-- 月子餐照片 -->
+  <div class="card mx-4">
+    <h2 class="section-header flex items-center justify-between">
+      <span><i class="fas fa-utensils mr-2"></i>月子餐照片</span>
+      <span class="text-sm font-normal">8张</span>
+    </h2>
+    <div class="p-4 grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300" alt="月子餐" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300?text=Food2" alt="月子餐" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300?text=Food3" alt="月子餐" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300?text=Food4" alt="月子餐" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300?text=Food5" alt="月子餐" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300?text=Food6" alt="月子餐" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden img-hover">
+        <img src="https://via.placeholder.com/300?text=Food7" alt="月子餐" class="w-full h-full object-cover">
+      </div>
+      <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden img-hover flex items-center justify-center">
+        <div class="text-center">
+          <i class="fas fa-ellipsis-h text-2xl text-primary mb-2"></i>
+          <p class="text-xs text-gray-600">查看全部</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 客户好评 -->
+  <div class="card mx-4">
+    <h2 class="section-header flex items-center justify-between">
+      <span><i class="fas fa-star mr-2"></i>客户好评</span>
+      <span class="text-sm font-normal">23条</span>
+    </h2>
+    <div class="p-4 space-y-4">
+      <!-- 评价卡片 -->
+      <div class="bg-light rounded-lg p-4">
+        <div class="flex items-center mb-2">
+          <div class="flex text-yellow-400">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <span class="text-xs text-gray-500 ml-2">2023-10-15</span>
+        </div>
+        <p class="text-sm text-gray-700">杜阿姨非常专业，对宝宝的护理无微不至，月子餐做得也很美味，非常感谢她这一个月的辛苦付出！</p>
+        <div class="flex mt-3">
+          <div class="w-16 h-16 bg-gray-200 rounded-md overflow-hidden">
+            <img src="https://via.placeholder.com/100" alt="评价图片" class="w-full h-full object-cover">
+          </div>
+        </div>
+        <div class="mt-2 text-xs text-gray-500">来自客户：张女士</div>
+      </div>
+      
+      <div class="bg-light rounded-lg p-4">
+        <div class="flex items-center mb-2">
+          <div class="flex text-yellow-400">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <span class="text-xs text-gray-500 ml-2">2023-08-22</span>
+        </div>
+        <p class="text-sm text-gray-700">杜阿姨通乳技术很好，解决了我的哺乳难题，对宝宝也特别有耐心，教会了我们很多育儿知识。</p>
+        <div class="mt-2 text-xs text-gray-500">来自客户：李女士</div>
+      </div>
+      
+      <div class="text-center pt-2">
+        <button class="text-primary text-sm font-medium flex items-center justify-center mx-auto">
+          <span>查看更多评价</span>
+          <i class="fas fa-chevron-down ml-1 text-xs"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 留言区域 -->
+  <div id="messageSection" class="card mx-4 mb-20">
+    <h2 class="section-header flex items-center">
+      <i class="fas fa-comments mr-2"></i>留言区
+    </h2>
+    <div class="p-5">
+      <!-- 留言表单 -->
+      <div class="bg-light rounded-lg p-4 mb-6">
+        <h3 class="font-medium mb-3">发表留言</h3>
         
-        // 初始化游戏
-        function initGame() {
-            setupCanvas();
-            
-            // 初始化玩家
-            player = {
-                x: canvasWidth / 2,
-                y: canvasHeight - 100,
-                width: 70,
-                height: 90,
-                lane: 1,
-                color: '#4CAF50',
-                name: '蔡颐城'
-            };
-            
-            // 设置车道位置
-            lanes = [
-                canvasWidth * 0.25,
-                canvasWidth * 0.5,
-                canvasWidth * 0.75
-            ];
-            
-            // 重置游戏状态
-            hydrants = [];
-            score = 0;
-            gameActive = true;
-            gameSpeed = 3;
-            spawnRate = 60;
-            frameCount = 0;
-            lastTimestamp = 0;
-            
-            // 更新分数显示
-            document.getElementById('score-display').textContent = `得分: ${score}`;
-            
-            // 隐藏开始界面，显示游戏
-            document.getElementById('start-screen').classList.remove('active');
-            document.getElementById('game-over-screen').classList.remove('active');
-            
-            // 开始游戏循环
-            requestAnimationFrame(gameLoop);
-        }
+        <!-- 评分区域 -->
+        <div class="mb-4">
+          <span class="text-sm text-gray-700 mr-3">评分：</span>
+          <div class="rating-stars inline-flex">
+            <i class="fas fa-star text-gray-300 text-xl mr-1 cursor-pointer" data-rating="1"></i>
+            <i class="fas fa-star text-gray-300 text-xl mr-1 cursor-pointer" data-rating="2"></i>
+            <i class="fas fa-star text-gray-300 text-xl mr-1 cursor-pointer" data-rating="3"></i>
+            <i class="fas fa-star text-gray-300 text-xl mr-1 cursor-pointer" data-rating="4"></i>
+            <i class="fas fa-star text-gray-300 text-xl cursor-pointer" data-rating="5"></i>
+          </div>
+          <span id="ratingValue" class="text-sm text-primary ml-2">0分</span>
+        </div>
         
-        // 设置Canvas尺寸
-        function setupCanvas() {
-            canvas = document.getElementById('game-canvas');
-            ctx = canvas.getContext('2d');
-            
-            // 设置Canvas大小为容器大小
-            const container = document.getElementById('game-container');
-            canvasWidth = canvas.width = container.clientWidth;
-            canvasHeight = canvas.height = container.clientHeight;
-        }
+        <!-- 留言内容 -->
+        <div class="mb-4">
+          <textarea id="messageContent" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" rows="4" placeholder="请输入您的留言内容..."></textarea>
+        </div>
         
-        // 游戏主循环
-        function gameLoop(timestamp) {
-            if (!gameActive) return;
-            
-            // 计算时间增量，确保平滑动画
-            const deltaTime = timestamp - lastTimestamp;
-            lastTimestamp = timestamp;
-            
-            // 限制帧率，减少闪烁
-            if (deltaTime < 16) { // 约60fps
-                requestAnimationFrame(gameLoop);
-                return;
-            }
-            
-            // 清除画布
-            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-            
-            // 绘制背景
-            drawBackground();
-            
-            // 更新和绘制消防栓
-            updateHydrants();
-            
-            // 绘制玩家
-            drawPlayer();
-            
-            // 生成新的消防栓
-            frameCount++;
-            if (frameCount % spawnRate === 0) {
-                spawnHydrant();
-                // 随着游戏进行，增加难度
-                if (spawnRate > 20) spawnRate -= 0.5;
-                if (gameSpeed < 8) gameSpeed += 0.05;
-            }
-            
-            // 增加分数
-            score++;
-            document.getElementById('score-display').textContent = `得分: ${score}`;
-            
-            // 继续循环
-            requestAnimationFrame(gameLoop);
-        }
+        <!-- 用户信息 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm text-gray-700 mb-1">您的姓名</label>
+            <input type="text" id="userName" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" placeholder="请输入姓名">
+          </div>
+          <div>
+            <label class="block text-sm text-gray-700 mb-1">联系方式</label>
+            <input type="text" id="userContact" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" placeholder="电话或微信">
+          </div>
+        </div>
         
-        // 绘制背景
-        function drawBackground() {
-            // 绘制天空
-            const skyGradient = ctx.createLinearGradient(0, 0, 0, canvasHeight);
-            skyGradient.addColorStop(0, '#87CEEB');
-            skyGradient.addColorStop(1, '#E0F7FA');
-            ctx.fillStyle = skyGradient;
-            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
-            
-            // 绘制道路
-            const roadWidth = canvasWidth * 0.8;
-            const roadX = (canvasWidth - roadWidth) / 2;
-            ctx.fillStyle = '#424242';
-            ctx.fillRect(roadX, 0, roadWidth, canvasHeight);
-            
-            // 绘制车道分隔线
-            ctx.strokeStyle = '#FFFFFF';
-            ctx.lineWidth = 5;
-            ctx.setLineDash([20, 30]);
-            
-            ctx.beginPath();
-            ctx.moveTo(roadX + roadWidth * 1/3, 0);
-            ctx.lineTo(roadX + roadWidth * 1/3, canvasHeight);
-            ctx.stroke();
-            
-            ctx.beginPath();
-            ctx.moveTo(roadX + roadWidth * 2/3, 0);
-            ctx.lineTo(roadX + roadWidth * 2/3, canvasHeight);
-            ctx.stroke();
-            
-            ctx.setLineDash([]);
-            
-            // 绘制草地
-            ctx.fillStyle = '#388E3C';
-            ctx.fillRect(0, 0, roadX, canvasHeight);
-            ctx.fillRect(roadX + roadWidth, 0, roadX, canvasHeight);
-            
-            // 绘制远处建筑物
-            ctx.fillStyle = '#78909C';
-            for (let i = 0; i < 5; i++) {
-                const buildingHeight = 80 + Math.random() * 100;
-                ctx.fillRect(roadX + 50 + i * 150, canvasHeight - buildingHeight, 80, buildingHeight);
-                
-                // 绘制窗户
-                ctx.fillStyle = '#FFD600';
-                for (let j = 0; j < 4; j++) {
-                    for (let k = 0; k < 4; k++) {
-                        ctx.fillRect(roadX + 60 + i * 150 + j * 20, canvasHeight - buildingHeight + 20 + k * 25, 10, 15);
-                    }
-                }
-                ctx.fillStyle = '#78909C';
-            }
-        }
-        
-        // 绘制玩家
-        function drawPlayer() {
-            // 绘制玩家身体
-            ctx.fillStyle = player.color;
-            ctx.beginPath();
-            roundRect(ctx, player.x - player.width/2, player.y - player.height/2, player.width, player.height, 10);
-            ctx.fill();
-            
-            // 绘制玩家头部
-            ctx.fillStyle = '#FFCCBC';
-            ctx.beginPath();
-            ctx.arc(player.x, player.y - player.height/2, 20, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // 绘制眼睛
-            ctx.fillStyle = '#000';
-            ctx.beginPath();
-            ctx.arc(player.x - 8, player.y - player.height/2 - 2, 4, 0, Math.PI * 2);
-            ctx.arc(player.x + 8, player.y - player.height/2 - 2, 4, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // 绘制嘴巴
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.arc(player.x, player.y - player.height/2 + 8, 8, 0.2 * Math.PI, 0.8 * Math.PI);
-            ctx.stroke();
-            
-            // 绘制手臂和腿
-            ctx.fillStyle = player.color;
-            ctx.fillRect(player.x - player.width/2 - 10, player.y - player.height/2 + 15, 10, 30);
-            ctx.fillRect(player.x + player.width/2, player.y - player.height/2 + 15, 10, 30);
-            ctx.fillRect(player.x - player.width/2, player.y + player.height/2 - 20, 15, 30);
-            ctx.fillRect(player.x + player.width/2 - 15, player.y + player.height/2 - 20, 15, 30);
-            
-            // 在身体上绘制名字"蔡颐城"
-            ctx.font = 'bold 18px "Microsoft YaHei", Arial, sans-serif';
-            ctx.fillStyle = '#FFFFFF';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(player.name, player.x, player.y - 5);
-            
-            // 添加名字阴影效果
-            ctx.strokeStyle = '#000000';
-            ctx.lineWidth = 2;
-            ctx.strokeText(player.name, player.x, player.y - 5);
-        }
-        
-        // 生成消防栓
-        function spawnHydrant() {
-            const lane = Math.floor(Math.random() * lanes.length);
-            
-            hydrants.push({
-                x: lanes[lane],
-                y: -50,
-                width: 50,
-                height: 70,
-                speed: gameSpeed,
-                color: '#FF5722'
-            });
-        }
-        
-        // 更新消防栓位置
-        function updateHydrants() {
-            for (let i = hydrants.length - 1; i >= 0; i--) {
-                const hydrant = hydrants[i];
-                
-                // 更新位置
-                hydrant.y += hydrant.speed;
-                
-                // 绘制消防栓
-                drawHydrant(hydrant);
-                
-                // 检测碰撞
-                if (isColliding(player, hydrant)) {
-                    gameOver();
-                    return;
-                }
-                
-                // 移除超出屏幕的消防栓
-                if (hydrant.y > canvasHeight + 100) {
-                    hydrants.splice(i, 1);
-                }
-            }
-        }
-        
-        // 绘制精致的消防栓
-        function drawHydrant(hydrant) {
-            const {x, y, width, height} = hydrant;
-            
-            // 消防栓主体
-            ctx.fillStyle = '#D32F2F';
-            ctx.beginPath();
-            roundRect(ctx, x - width/2, y - height/2, width, height * 0.8, 10);
-            ctx.fill();
-            
-            // 消防栓顶部
-            ctx.fillStyle = '#FFC107';
-            ctx.beginPath();
-            ctx.arc(x, y - height/2, width/2, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // 顶部细节
-            ctx.fillStyle = '#FFA000';
-            ctx.beginPath();
-            ctx.arc(x, y - height/2, width/3, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // 消防栓接口
-            ctx.fillStyle = '#757575';
-            ctx.beginPath();
-            ctx.arc(x, y - height/2, width/6, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // 消防栓侧面接口
-            ctx.fillStyle = '#9E9E9E';
-            ctx.beginPath();
-            ctx.arc(x - width/2, y - height/4, width/5, 0, Math.PI * 2);
-            ctx.fill();
-            
-            ctx.beginPath();
-            ctx.arc(x + width/2, y - height/4, width/5, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // 添加高光
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-            ctx.beginPath();
-            ctx.arc(x - width/4, y - height/2 + 5, width/8, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // 添加阴影
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-            ctx.beginPath();
-            ctx.arc(x + width/4, y - height/2 + 5, width/8, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // 底座
-            ctx.fillStyle = '#9E9E9E';
-            ctx.beginPath();
-            roundRect(ctx, x - width/2 - 5, y + height/2 - 10, width + 10, 10, 5);
-            ctx.fill();
-            
-            // 添加反光效果
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-            ctx.beginPath();
-            ctx.moveTo(x - width/2, y - height/2);
-            ctx.lineTo(x - width/2, y + height/2 - 10);
-            ctx.lineTo(x - width/4, y + height/2 - 10);
-            ctx.lineTo(x - width/4, y - height/2);
-            ctx.closePath();
-            ctx.fill();
-        }
-        
-        // 碰撞检测
-        function isColliding(obj1, obj2) {
-            return obj1.x - obj1.width/2 < obj2.x + obj2.width/2 &&
-                   obj1.x + obj1.width/2 > obj2.x - obj2.width/2 &&
-                   obj1.y - obj1.height/2 < obj2.y + obj2.height/2 &&
-                   obj1.y + obj1.height/2 > obj2.y - obj2.height/2;
-        }
-        
-        // 游戏结束
-        function gameOver() {
-            gameActive = false;
-            document.getElementById('final-score').textContent = score;
-            document.getElementById('game-over-screen').classList.add('active');
-        }
-        
-        // 移动玩家
-        function movePlayer(direction) {
-            if (!gameActive) return;
-            
-            if (direction === 'left' && player.lane > 0) {
-                player.lane--;
-            } else if (direction === 'right' && player.lane < lanes.length - 1) {
-                player.lane++;
-            }
-            
-            player.x = lanes[player.lane];
-        }
-        
-        // 圆角矩形函数
-        function roundRect(ctx, x, y, width, height, radius) {
-            if (width < 2 * radius) radius = width / 2;
-            if (height < 2 * radius) radius = height / 2;
-            
-            ctx.beginPath();
-            ctx.moveTo(x + radius, y);
-            ctx.lineTo(x + width - radius, y);
-            ctx.arcTo(x + width, y, x + width, y + radius, radius);
-            ctx.lineTo(x + width, y + height - radius);
-            ctx.arcTo(x + width, y + height, x + width - radius, y + height, radius);
-            ctx.lineTo(x + radius, y + height);
-            ctx.arcTo(x, y + height, x, y + height - radius, radius);
-            ctx.lineTo(x, y + radius);
-            ctx.arcTo(x, y, x + radius, y, radius);
-            ctx.closePath();
-        }
-        
-        // 设置事件监听器
-        function setupEventListeners() {
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowLeft') {
-                    movePlayer('left');
-                } else if (e.key === 'ArrowRight') {
-                    movePlayer('right');
-                }
-            });
-            
-            document.getElementById('left-btn').addEventListener('click', () => {
-                movePlayer('left');
-            });
-            
-            document.getElementById('right-btn').addEventListener('click', () => {
-                movePlayer('right');
-            });
-            
-            document.getElementById('start-button').addEventListener('click', initGame);
-            document.getElementById('restart-button').addEventListener('click', initGame);
-        }
-        
-        // 初始化游戏
-        function initializeGame() {
-            // 添加圆角矩形支持
-            if (!CanvasRenderingContext2D.prototype.roundRect) {
-                CanvasRenderingContext2D.prototype.roundRect = roundRect;
-            }
-            
-            setupCanvas();
-            setupEventListeners();
-            
-            // 设置初始车道位置
-            lanes = [
-                canvasWidth * 0.25,
-                canvasWidth * 0.5,
-                canvasWidth * 0.75
-            ];
-        }
-        
-        // 页面加载完成后初始化游戏
-        window.addEventListener('load', initializeGame);
-        
-        // 窗口大小变化时调整Canvas
-        window.addEventListener('resize', () => {
-            if (!gameActive) {
-                setupCanvas();
-                // 设置初始车道位置
-                lanes = [
-                    canvasWidth * 0.25,
-                    canvasWidth * 0.5,
-                    canvasWidth * 0.75
-                ];
-            }
+        <!-- 提交按钮 -->
+        <button id="submitMessage" class="bg-primary text-white px-6 py-2 rounded-lg font-medium w-full md:w-auto">
+          提交留言
+        </button>
+      </div>
+      
+      <!-- 留言列表 -->
+      <div id="messageList" class="space-y-4">
+        <!-- 留言将动态添加到这里 -->
+        <div class="message-item bg-white border border-gray-200 rounded-lg p-4">
+          <div class="flex justify-between items-start mb-2">
+            <div>
+              <div class="flex text-yellow-400 mb-1">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <p class="text-sm text-gray-700">杜阿姨非常专业，对宝宝的护理无微不至，月子餐做得也很美味，非常感谢她这一个月的辛苦付出！</p>
+            </div>
+            <span class="text-xs text-gray-500 whitespace-nowrap">2023-10-15 14:30</span>
+          </div>
+          <div class="text-xs text-gray-500">来自：张女士</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部操作栏 -->
+  <div class="bg-white border-t border-gray-200 fixed bottom-0 w-full flex justify-between items-center py-3 px-6 shadow-lg">
+    <div class="flex items-center">
+      <div class="text-primary mr-2">
+        <i class="fas fa-comment-dots text-xl"></i>
+      </div>
+      <div>
+        <div class="text-xs text-gray-500">咨询电话</div>
+        <div class="text-sm font-bold">138****1234</div>
+      </div>
+    </div>
+    <div class="flex space-x-3">
+      <button id="bottomContactBtn" class="bg-white border border-primary text-primary text-sm px-4 py-2 rounded-full font-medium">
+        <i class="fas fa-comment-alt mr-1"></i> 联系
+      </button>
+      <button id="bottomMessageBtn" class="bg-gradient-to-r from-primary to-accent text-white text-sm px-6 py-2 rounded-full font-medium shadow-md">
+        <i class="fas fa-pencil-alt mr-1"></i> 留言
+      </button>
+    </div>
+  </div>
+
+  <!-- 联系弹窗 -->
+  <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl p-6 w-5/6 max-w-md">
+      <h3 class="text-lg font-bold mb-4">联系月嫂</h3>
+      <div class="space-y-3">
+        <button id="wechatContact" class="w-full flex items-center justify-center bg-green-100 text-green-700 py-3 rounded-lg font-medium">
+          <i class="fab fa-weixin mr-2"></i> 微信联系
+        </button>
+        <button id="phoneContact" class="w-full flex items-center justify-center bg-blue-100 text-blue-700 py-3 rounded-lg font-medium">
+          <i class="fas fa-phone mr-2"></i> 电话联系
+        </button>
+      </div>
+      <button class="mt-4 w-full py-2 text-gray-500" onclick="document.getElementById('contactModal').classList.add('hidden')">
+        取消
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // 当前评分（0-5）
+    let currentRating = 0;
+    
+    // 页面加载完成后初始化
+    window.addEventListener('DOMContentLoaded', function() {
+      setupWechatShare();
+      initRatingStars();
+      setupContactButtons();
+      setupMessageButton();
+      setupSubmitMessage();
+    });
+
+    // 初始化评分星星
+    function initRatingStars() {
+      const stars = document.querySelectorAll('.rating-stars .fa-star');
+      stars.forEach(star => {
+        star.addEventListener('mouseover', function() {
+          const rating = parseInt(this.getAttribute('data-rating'));
+          highlightStars(rating);
         });
-    </script>
+        
+        star.addEventListener('mouseout', function() {
+          highlightStars(currentRating);
+        });
+        
+        star.addEventListener('click', function() {
+          currentRating = parseInt(this.getAttribute('data-rating'));
+          highlightStars(currentRating);
+          document.getElementById('ratingValue').textContent = currentRating + '分';
+        });
+      });
+    }
+    
+    // 高亮星星
+    function highlightStars(rating) {
+      const stars = document.querySelectorAll('.rating-stars .fa-star');
+      stars.forEach(star => {
+        const starRating = parseInt(star.getAttribute('data-rating'));
+        if (starRating <= rating) {
+          star.classList.add('text-yellow-400');
+          star.classList.remove('text-gray-300');
+        } else {
+          star.classList.remove('text-yellow-400');
+          star.classList.add('text-gray-300');
+        }
+      });
+    }
+    
+    // 设置联系按钮
+    function setupContactButtons() {
+      // 顶部浮动联系按钮
+      document.getElementById('contactFloatBtn').addEventListener('click', function() {
+        document.getElementById('contactModal').classList.remove('hidden');
+      });
+      
+      // 底部联系按钮
+      document.getElementById('bottomContactBtn').addEventListener('click', function() {
+        document.getElementById('contactModal').classList.remove('hidden');
+      });
+      
+      // 微信联系
+      document.getElementById('wechatContact').addEventListener('click', function() {
+        // 这里应该使用真实的微信号
+        window.location.href = 'weixin://dl/add?username=du_rongying';
+      });
+      
+      // 电话联系
+      document.getElementById('phoneContact').addEventListener('click', function() {
+        // 这里应该使用真实的电话号码
+        window.location.href = 'tel:13800138000';
+      });
+    }
+    
+    // 设置留言按钮
+    function setupMessageButton() {
+      // 顶部留言按钮
+      document.getElementById('messageFloatBtn').addEventListener('click', function() {
+        // 滚动到留言区域
+        document.getElementById('messageSection').scrollIntoView({ behavior: 'smooth' });
+        
+        // 聚焦到留言文本框
+        setTimeout(function() {
+          document.getElementById('messageContent').focus();
+        }, 500);
+      });
+      
+      // 底部留言按钮
+      document.getElementById('bottomMessageBtn').addEventListener('click', function() {
+        // 滚动到留言区域
+        document.getElementById('messageSection').scrollIntoView({ behavior: 'smooth' });
+        
+        // 聚焦到留言文本框
+        setTimeout(function() {
+          document.getElementById('messageContent').focus();
+        }, 500);
+      });
+    }
+    
+    // 设置提交留言功能
+    function setupSubmitMessage() {
+      document.getElementById('submitMessage').addEventListener('click', function() {
+        const content = document.getElementById('messageContent').value.trim();
+        const userName = document.getElementById('userName').value.trim();
+        
+        if (!content) {
+          alert('请输入留言内容');
+          return;
+        }
+        
+        if (!userName) {
+          alert('请输入您的姓名');
+          return;
+        }
+        
+        if (currentRating === 0) {
+          alert('请选择评分');
+          return;
+        }
+        
+        // 获取当前时间
+        const now = new Date();
+        const dateString = now.getFullYear() + '-' + 
+                          String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                          String(now.getDate()).padStart(2, '0') + ' ' +
+                          String(now.getHours()).padStart(2, '0') + ':' +
+                          String(now.getMinutes()).padStart(2, '0');
+        
+        // 创建新的留言元素
+        const messageItem = document.createElement('div');
+        messageItem.className = 'message-item bg-white border border-gray-200 rounded-lg p-4';
+        messageItem.innerHTML = `
+          <div class="flex justify-between items-start mb-2">
+            <div>
+              <div class="flex text-yellow-400 mb-1">
+                ${getStarIcons(currentRating)}
+              </div>
+              <p class="text-sm text-gray-700">${content}</p>
+            </div>
+            <span class="text-xs text-gray-500 whitespace-nowrap">${dateString}</span>
+          </div>
+          <div class="text-xs text-gray-500">来自：${userName}</div>
+        `;
+        
+        // 添加到留言列表顶部
+        const messageList = document.getElementById('messageList');
+        messageList.insertBefore(messageItem, messageList.firstChild);
+        
+        // 清空表单
+        document.getElementById('messageContent').value = '';
+        document.getElementById('userName').value = '';
+        document.getElementById('userContact').value = '';
+        
+        // 重置评分
+        currentRating = 0;
+        highlightStars(0);
+        document.getElementById('ratingValue').textContent = '0分';
+        
+        alert('留言提交成功！');
+      });
+    }
+    
+    // 生成星星图标
+    function getStarIcons(rating) {
+      let starsHtml = '';
+      for (let i = 1; i <= 5; i++) {
+        starsHtml += `<i class="fas fa-star ${i <= rating ? '' : 'hidden'}"></i>`;
+      }
+      return starsHtml;
+    }
+
+    // 模拟微信分享功能
+    function setupWechatShare() {
+      // 实际应用中这里会调用微信JSSDK的配置接口
+      console.log('配置微信分享功能');
+    }
+  </script>
 </body>
 </html>
